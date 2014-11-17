@@ -1,4 +1,4 @@
-->
+do ->
   "use strict"
 
   PleaseWait = ->

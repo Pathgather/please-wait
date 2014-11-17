@@ -1,4 +1,4 @@
-/* please-wait - v0.0.0 - 2014-11-14 */
+/* please-wait - v0.0.0 - 2014-11-16 */
 (function() {
   "use strict";
   var PleaseWait;
@@ -96,4 +96,4 @@
     };
   };
   return window.pleaseWait = new PleaseWait();
-});
+})();
