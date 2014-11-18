@@ -30,8 +30,8 @@ do ->
             @_loadingDone()
         else @_loadingDone()
 
-      # status: (msg) ->
-        # Want to show a status message, like "Checking for authentication", etc
+      status: (msg) ->
+        @_messageDiv.innerHTML = msg
 
       load: (options = {}) ->
         @_options                          = options
@@ -44,6 +44,15 @@ do ->
         spinner                            = document.createElement("div")
         spinner.className                  = "pg-loading-spinner"
         spinnerTemplate                    = null
+        loadingInnerDiv                    = document.createElement("div")
+        loadingInnerDiv.className          = "pg-loading-inner"
+        loadingCenterOuterDiv              = document.createElement("div")
+        loadingCenterOuterDiv.className    = "pg-loading-center-outer"
+        loadingCenterMiddleDiv             = document.createElement("div")
+        loadingCenterMiddleDiv.className   = "pg-loading-center-middle"
+        logoImg                            = document.createElement("img")
+        logoImg.className                  = "pg-loading-logo"
+        logoImg.src                        = options.logo
 
         for script in document.scripts
           if script.id == "pgLoadingSpinner"
@@ -62,16 +71,12 @@ do ->
         else
           throw new Error("You need to set a spinner template ID or spinnerTemplate")
 
-        @_loadingDiv.innerHTML = """
-          <div class='pg-loading-inner'>
-            <div class='pg-loading-center-outer'>
-              <div class='pg-loading-center-middle'>
-                <img class='pg-loading-logo' src='#{options.logo}'></img>
-                #{spinner.outerHTML}
-              </div>
-            </div>
-          </div>
-        """
+        loadingCenterMiddleDiv.appendChild(logoImg)
+        loadingCenterMiddleDiv.appendChild(spinner)
+        loadingCenterMiddleDiv.appendChild(@_messageDiv)
+        loadingCenterOuterDiv.appendChild(loadingCenterMiddleDiv)
+        loadingInnerDiv.appendChild(loadingCenterOuterDiv)
+        @_loadingDiv.appendChild(loadingInnerDiv)
         document.body.appendChild(@_loadingDiv)
 
       _loadingDone: ->
@@ -83,6 +88,7 @@ do ->
     return {
       start  : (options = {}) -> _pleaseWait.load(options)
       finish : -> _pleaseWait.done()
+      status : (msg) -> _pleaseWait.status(msg)
     }
 
   window.pleaseWait = new PleaseWait()
