@@ -2,13 +2,26 @@ do ->
   "use strict"
 
   PleaseWait = ->
-    return {
+    getTransitionEvent = ->
+      el = document.createElement('fakeelement')
+      transitions = {
+        'transition':'transitionend',
+        'OTransition':'oTransitionEnd',
+        'msTransition': 'MSTransitionEnd',
+        'MozTransition':'transitionend',
+        'WebkitTransition':'webkitTransitionEnd'
+      }
+
+      for key, val of transitions
+        return val if el.style[key]?
+
+    _pleaseWait = {
       done: ->
         return if @_done || !@_loadingDiv?
         @_done = true
 
         if @_options.fadeOut
-          transitionEvent = @_whichTransitionEvent()
+          transitionEvent = getTransitionEvent()
           if transitionEvent?
             @_loadingDiv.className  += " pg-loaded"
             @_loadingDiv.addEventListener transitionEvent, () =>
@@ -61,23 +74,15 @@ do ->
         """
         document.body.appendChild(@_loadingDiv)
 
-      _whichTransitionEvent: ->
-        el = document.createElement('fakeelement')
-        transitions = {
-          'transition':'transitionend',
-          'OTransition':'oTransitionEnd',
-          'msTransition': 'MSTransitionEnd',
-          'MozTransition':'transitionend',
-          'WebkitTransition':'webkitTransitionEnd'
-        }
-
-        for key, val of transitions
-          return val if el.style[key]?
-
       _loadingDone: ->
         document.body.removeChild(@_loadingDiv)
         @_stylesheet.disabled = true
         document.body.className += " pg-loaded"
+    }
+
+    return {
+      start  : (options = {}) -> _pleaseWait.load(options)
+      finish : -> _pleaseWait.done()
     }
 
   window.pleaseWait = new PleaseWait()
