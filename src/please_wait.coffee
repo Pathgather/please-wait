@@ -50,7 +50,7 @@ do ->
         loadingCenterOuterDiv.className    = "pg-loading-center-outer"
         loadingCenterMiddleDiv             = document.createElement("div")
         loadingCenterMiddleDiv.className   = "pg-loading-center-middle"
-        logoImg                            = document.createElement("img")
+        logoImg                            = new Image()
         logoImg.className                  = "pg-loading-logo"
         logoImg.src                        = options.logo
 
