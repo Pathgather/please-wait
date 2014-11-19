@@ -14,11 +14,11 @@
     getTransitionEvent = ->
       el = document.createElement('fakeelement')
       transitions = {
-        'transition':'transitionend',
-        'OTransition':'oTransitionEnd',
-        'msTransition': 'MSTransitionEnd',
-        'MozTransition':'transitionend',
-        'WebkitTransition':'webkitTransitionEnd'
+        'WebkitAnimation': 'webkitAnimationEnd',
+        'OAnimation': 'oAnimationEnd',
+        'msAnimation': 'MSAnimationEnd',
+        'MozAnimation': 'mozAnimationEnd'
+        'animation' : 'animationend'
       }
 
       for key, val of transitions
@@ -26,20 +26,14 @@
 
     _pleaseWait = {
       defaultOptions: {
-        fadeOut: true,
         backgroundColor: '#f46d3b',
         logo: null,
+        spinnerTemplate: null,
         template: """
-          <div class='pg-loading-inner'>
-            <div class='pg-loading-center-outer'>
-              <div class='pg-loading-center-middle'>
-                <h1 class='pg-loading-logo-header'>
-                  <img class='pg-loading-logo'></img>
-                </h1>
-                <div class='pg-loading-spinner'>
-                </div>
-              </div>
-            </div>
+          <h1 class='pg-loading-logo-header'>
+            <img class='pg-loading-logo'></img>
+          </h1>
+          <div class='pg-loading-spinner'>
           </div>
         """
       }
@@ -48,15 +42,13 @@
         return if @_done || !@_loadingDiv?
         @_done = true
 
-        if @_options.fadeOut
-          transitionEvent = getTransitionEvent()
-          if transitionEvent?
-            @_loadingDiv.className  += " pg-loaded"
-            @_loadingDiv.addEventListener transitionEvent, () =>
-              @_loadingDone()
-          else
+        transitionEvent = getTransitionEvent()
+        if transitionEvent?
+          @_loadingDiv.className  += " pg-loaded"
+          @_loadingDiv.addEventListener transitionEvent, () =>
             @_loadingDone()
-        else @_loadingDone()
+        else
+          @_loadingDone()
 
       load: (options = {}) ->
         @_options                          = @_setOptions(options)
@@ -66,27 +58,17 @@
         @_loadingDiv.innerHTML             = @_options.template
         spinnerTemplate                    = null
         spinner                            = @_loadingDiv.getElementsByClassName("pg-loading-spinner")[0]
+        spinner.innerHTML                  = @_options.spinnerTemplate
         logo                               = @_loadingDiv.getElementsByClassName("pg-loading-logo")[0]
         logo.src                           = @_options.logo
-
-        for script in document.scripts
-          if script.id == "pgLoadingSpinner"
-            spinnerTemplate = script.innerHTML
-            break
 
         for stylesheet in document.styleSheets
           if stylesheet.ownerNode.id == "pgLoadingStylesheet"
             @_stylesheet = stylesheet
             break
 
-        spinner.innerHTML = if spinnerTemplate?
-          spinnerTemplate
-        else if @_options.spinnerTemplate?
-          @_options.spinnerTemplate
-        else
-          throw new Error("You need to set a spinner template ID or spinnerTemplate")
-
         document.body.appendChild(@_loadingDiv)
+        @_loadingDiv.className += " pg-loading"
 
       _loadingDone: ->
         document.body.removeChild(@_loadingDiv)
