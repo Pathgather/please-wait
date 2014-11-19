@@ -66,12 +66,12 @@ body {
     opacity: 0;
     cursor: default;
     pointer-events: none;
+    top: 0;
+    height: 100%;
   }
 
   .pg-loading-logo-header {
-    top: 0;
-    height: 100%;
-    transform: translate3d(0,25%,0);
+    @include prefixed(transform, translate3d(0,25%,0));
     text-align: center;
 
     img {
@@ -80,7 +80,7 @@ body {
   }
 
   .pg-loading-spinner {
-    bottom: 20%;
+    @include prefixed(transform, translate3d(0,55%,0));
   }
 }
 
