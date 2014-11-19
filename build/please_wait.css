@@ -10,58 +10,129 @@ body .pg-loading-screen {
 body .pg-loading-screen * {
   display: block !important;
 }
-/* line 30, ../src/please_wait.scss */
-body .pg-loading-screen {
+
+/* line 31, ../src/please_wait.scss */
+.pg-loading-screen {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
   overflow-y: auto;
   opacity: 1;
 }
-/* line 40, ../src/please_wait.scss */
-body .pg-loading-screen.pg-loaded {
+/* line 43, ../src/please_wait.scss */
+.pg-loading-screen.pg-loaded {
   opacity: 0;
-  -webkit-transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s;
-  -ms-transition: opacity 0.5s;
-  -o-transition: opacity 0.5s;
-  transition: opacity 0.5s;
+  -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -moz-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -ms-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 46, ../src/please_wait.scss */
-body .pg-loading-logo {
-  display: inline !important;
+/* line 49, ../src/please_wait.scss */
+.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-spinner {
+  opacity: 1;
 }
-/* line 50, ../src/please_wait.scss */
-body .pg-loading-inner {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  position: static;
+/* line 53, ../src/please_wait.scss */
+.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-spinner {
+  -webkit-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -moz-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -ms-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -o-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
+  animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 58, ../src/please_wait.scss */
-body .pg-loading-center-outer {
-  width: 100%;
-  padding: 0;
-  display: table !important;
-  height: 100%;
+/* line 57, ../src/please_wait.scss */
+.pg-loading-screen.pg-loading .pg-loading-spinner {
+  -webkit-animation-delay: 0.3s;
+  -moz-animation-delay: 0.3s;
+  -ms-animation-delay: 0.3s;
+  -o-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+/* line 62, ../src/please_wait.scss */
+.pg-loading-screen .pg-loading-logo-header, .pg-loading-screen .pg-loading-spinner {
   position: absolute;
-  top: 0;
   left: 0;
-  margin: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+  top: 0;
+  height: 100%;
 }
-/* line 69, ../src/please_wait.scss */
-body .pg-loading-center-middle {
-  padding: 0;
-  vertical-align: middle;
-  display: table-cell  !important;
-  margin: 0;
+/* line 73, ../src/please_wait.scss */
+.pg-loading-screen .pg-loading-logo-header {
+  -webkit-transform: translate3d(0, 25%, 0);
+  -moz-transform: translate3d(0, 25%, 0);
+  -ms-transform: translate3d(0, 25%, 0);
+  -o-transform: translate3d(0, 25%, 0);
+  transform: translate3d(0, 25%, 0);
   text-align: center;
 }
 /* line 77, ../src/please_wait.scss */
-body .pg-loading-spinner {
-  margin: 40px auto;
+.pg-loading-screen .pg-loading-logo-header img {
+  display: inline-block !important;
+}
+/* line 82, ../src/please_wait.scss */
+.pg-loading-screen .pg-loading-spinner {
+  -webkit-transform: translate3d(0, 55%, 0);
+  -moz-transform: translate3d(0, 55%, 0);
+  -ms-transform: translate3d(0, 55%, 0);
+  -o-transform: translate3d(0, 55%, 0);
+  transform: translate3d(0, 55%, 0);
+}
+
+@-webkit-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-moz-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-o-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-ms-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes pgAnimLoaded {
+  from {
+    opacity: 1;
+  }
+}
+@-moz-keyframes pgAnimLoaded {
+  from {
+    opacity: 1;
+  }
+}
+@-o-keyframes pgAnimLoaded {
+  from {
+    opacity: 1;
+  }
+}
+@-ms-keyframes pgAnimLoaded {
+  from {
+    opacity: 1;
+  }
+}
+@keyframes pgAnimLoaded {
+  from {
+    opacity: 1;
+  }
 }

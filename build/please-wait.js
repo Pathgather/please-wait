@@ -1,99 +1,118 @@
-/* please-wait - v0.0.0 - 2014-11-16 */
-(function() {
-  "use strict";
+/* please-wait - v0.0.0 - 2014-11-19 */
+(function(root, factory) {
+  if (typeof exports === "object") {
+    factory(exports);
+  } else if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else {
+    factory(root);
+  }
+})(this, function(exports) {
   var PleaseWait;
   PleaseWait = function() {
-    return {
+    var getTransitionEvent, _pleaseWait;
+    getTransitionEvent = function() {
+      var el, key, transitions, val;
+      el = document.createElement('fakeelement');
+      transitions = {
+        'WebkitAnimation': 'webkitAnimationEnd',
+        'OAnimation': 'oAnimationEnd',
+        'msAnimation': 'MSAnimationEnd',
+        'MozAnimation': 'mozAnimationEnd',
+        'animation': 'animationend'
+      };
+      for (key in transitions) {
+        val = transitions[key];
+        if (el.style[key] != null) {
+          return val;
+        }
+      }
+    };
+    _pleaseWait = {
+      defaultOptions: {
+        backgroundColor: '#f46d3b',
+        logo: null,
+        spinnerTemplate: null,
+        template: "<h1 class='pg-loading-logo-header'>\n  <img class='pg-loading-logo'></img>\n</h1>\n<div class='pg-loading-spinner'>\n</div>"
+      },
       done: function() {
         var transitionEvent;
         if (this._done || (this._loadingDiv == null)) {
           return;
         }
         this._done = true;
-        if (this._options.fadeOut) {
-          transitionEvent = this._whichTransitionEvent();
-          if (transitionEvent != null) {
-            this._loadingDiv.className += " pg-loaded";
-            return this._loadingDiv.addEventListener(transitionEvent, (function(_this) {
-              return function() {
-                return _this._loadingDone();
-              };
-            })(this));
-          } else {
-            return this._loadingDone();
-          }
+        transitionEvent = getTransitionEvent();
+        if (transitionEvent != null) {
+          this._loadingDiv.className += " pg-loaded";
+          return this._loadingDiv.addEventListener(transitionEvent, (function(_this) {
+            return function() {
+              return _this._loadingDone();
+            };
+          })(this));
         } else {
           return this._loadingDone();
         }
       },
       load: function(options) {
-        var script, spinner, spinnerTemplate, stylesheet, _i, _j, _len, _len1, _ref, _ref1;
+        var logo, spinner, spinnerTemplate, stylesheet, _i, _len, _ref;
         if (options == null) {
           options = {};
         }
-        this._options = options;
-        if (options.fadeOut == null) {
-          this._options.fadeOut = true;
-        }
-        this._loadingDiv = document.createElement("div");
+        this._options = this._setOptions(options);
+        this._loadingDiv = document.createElement("header");
         this._loadingDiv.className = "pg-loading-screen";
-        this._loadingDiv.style.backgroundColor = options.backgroundColor || "#f46d3b";
-        this._messageDiv = document.createElement("div");
-        this._messageDiv.className = "pg-loading-message";
-        spinner = document.createElement("div");
-        spinner.className = "pg-loading-spinner";
+        this._loadingDiv.style.backgroundColor = this._options.backgroundColor;
+        this._loadingDiv.innerHTML = this._options.template;
         spinnerTemplate = null;
-        _ref = document.scripts;
+        spinner = this._loadingDiv.getElementsByClassName("pg-loading-spinner")[0];
+        spinner.innerHTML = this._options.spinnerTemplate;
+        logo = this._loadingDiv.getElementsByClassName("pg-loading-logo")[0];
+        logo.src = this._options.logo;
+        _ref = document.styleSheets;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          script = _ref[_i];
-          if (script.id === "pgLoadingSpinner") {
-            spinnerTemplate = script.innerHTML;
-            break;
-          }
-        }
-        _ref1 = document.styleSheets;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          stylesheet = _ref1[_j];
+          stylesheet = _ref[_i];
           if (stylesheet.ownerNode.id === "pgLoadingStylesheet") {
             this._stylesheet = stylesheet;
             break;
           }
         }
-        spinner.innerHTML = (function() {
-          if (spinnerTemplate != null) {
-            return spinnerTemplate;
-          } else if (options.spinnerTemplate != null) {
-            return options.spinnerTemplate;
-          } else {
-            throw new Error("You need to set a spinner template ID or spinnerTemplate");
-          }
-        })();
-        this._loadingDiv.innerHTML = "<div class='pg-loading-inner'>\n  <div class='pg-loading-center-outer'>\n    <div class='pg-loading-center-middle'>\n      <img class='pg-loading-logo' src='" + options.logo + "'></img>\n      " + spinner.outerHTML + "\n    </div>\n  </div>\n</div>";
-        return document.body.appendChild(this._loadingDiv);
-      },
-      _whichTransitionEvent: function() {
-        var el, key, transitions, val;
-        el = document.createElement('fakeelement');
-        transitions = {
-          'transition': 'transitionend',
-          'OTransition': 'oTransitionEnd',
-          'msTransition': 'MSTransitionEnd',
-          'MozTransition': 'transitionend',
-          'WebkitTransition': 'webkitTransitionEnd'
-        };
-        for (key in transitions) {
-          val = transitions[key];
-          if (el.style[key] != null) {
-            return val;
-          }
-        }
+        document.body.appendChild(this._loadingDiv);
+        return this._loadingDiv.className += " pg-loading";
       },
       _loadingDone: function() {
         document.body.removeChild(this._loadingDiv);
         this._stylesheet.disabled = true;
         return document.body.className += " pg-loaded";
+      },
+      _setOptions: function(new_opts) {
+        var k, options, v;
+        if (new_opts == null) {
+          new_opts = {};
+        }
+        options = this.defaultOptions;
+        for (k in new_opts) {
+          v = new_opts[k];
+          if (options.hasOwnProperty(k)) {
+            options[k] = v;
+          }
+        }
+        return options;
+      }
+    };
+    return {
+      start: function(options) {
+        if (options == null) {
+          options = {};
+        }
+        return _pleaseWait.load(options);
+      },
+      finish: function() {
+        return _pleaseWait.done();
+      },
+      status: function(msg) {
+        return _pleaseWait.status(msg);
       }
     };
   };
-  return window.pleaseWait = new PleaseWait();
-})();
+  return exports.pleaseWait = new PleaseWait();
+});
