@@ -42,7 +42,7 @@ body {
 
   &.pg-loaded {
     opacity: 0;
-    @include prefixed(animation, pgAnimLoaded 1s cubic-bezier(0.7,0,0.3,1) both);
+    @include prefixed(animation, pgAnimLoaded 0.5s cubic-bezier(0.7,0,0.3,1) both);
   }
 
   &.pg-loading {
@@ -55,7 +55,7 @@ body {
     }
 
     .pg-loading-spinner {
-      @include prefixed(animation-delay, 0.5s);
+      @include prefixed(animation-delay, 0.3s);
     }
   }
 
