@@ -88,7 +88,6 @@
     return {
       start  : (options = {}) -> _pleaseWait.load(options)
       finish : -> _pleaseWait.done()
-      status : (msg) -> _pleaseWait.status(msg)
     }
 
   exports.pleaseWait = new PleaseWait()

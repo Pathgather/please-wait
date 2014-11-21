@@ -1,4 +1,4 @@
-/* please-wait - v0.0.0 - 2014-11-19 */
+/* please-wait - v0.0.0 - 2014-11-21 */
 (function(root, factory) {
   if (typeof exports === "object") {
     factory(exports);
@@ -108,11 +108,19 @@
       },
       finish: function() {
         return _pleaseWait.done();
-      },
-      status: function(msg) {
-        return _pleaseWait.status(msg);
       }
     };
   };
   return exports.pleaseWait = new PleaseWait();
 });
+
+(function() {
+  'use strict';
+  describe('PleaseWait', function() {
+    return it('defines start & finish', function() {
+      expect(pleaseWait.start).toBeDefined();
+      return expect(pleaseWait.finish).toBeDefined();
+    });
+  });
+
+}).call(this);

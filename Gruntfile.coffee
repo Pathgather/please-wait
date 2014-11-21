@@ -5,6 +5,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-compass'
+  grunt.loadNpmTasks 'grunt-contrib-jasmine'
 
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
@@ -21,22 +22,29 @@ module.exports = (grunt) ->
         max_line_length:
           level: 'ignore'
     clean:
-      options:
-        force: true
-      build: ["compile/**", "build/**"]
+      dist:
+        build: ["compile/**", "build/**"]
+      test:
+        build: ["compile/**"]
     coffee:
       compile:
         files: [
-          {
-            expand: true
-            cwd: 'src/'
-            src: '**/*.coffee'
-            dest: 'compile/'
-            ext: '.js'
-          }
+          expand: true
+          cwd: 'src/'
+          src: '**/*.coffee'
+          dest: 'compile/'
+          ext: '.js'
         ],
         options:
           bare: true
+      test:
+        files: [
+          expand: true,
+          cwd: 'spec',
+          src: '**/*.coffee',
+          dest: 'compile/spec',
+          ext: '.js'
+        ]
     concat:
       options:
         banner: '<%= meta.banner %>'
@@ -49,5 +57,17 @@ module.exports = (grunt) ->
       dist:
         src: ['build/please-wait.js']
         dest: 'build/please-wait.min.js'
+    jasmine:
+      please_wait:
+        src: 'compile/**/*.js'
+        options:
+          specs: 'compile/spec/*.spec.js',
+          helpers: 'compile/spec/*.helper.js'
 
   grunt.registerTask 'default', ['coffeelint', 'clean', 'compass', 'coffee', 'concat', 'uglify']
+  grunt.registerTask 'test', [
+    'coffeelint',
+    'clean:test',
+    'coffee',
+    'jasmine'
+  ]
