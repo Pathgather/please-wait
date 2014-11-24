@@ -15,7 +15,18 @@ module.exports = (grunt) ->
           sassDir: 'src',
           cssDir: 'build'
     meta:
-      banner: '/* <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+      banner: """
+        /**\n
+        * <%= pkg.name %>
+        * <%= pkg.description %>\n
+        * @author <%= pkg.author.name %> <<%= pkg.author.email %>>
+        * @copyright <%= pkg.author.name %> <%= grunt.template.today('yyyy') %>
+        * @license <%= pkg.licenses[0].type %> <<%= pkg.licenses[0].url %>>
+        * @link <%= pkg.homepage %>
+        * @module <%= pkg.module %>
+        * @version <%= pkg.version %>
+        */\n
+      """
     coffeelint:
       src: 'src/**/*.coffee'
       options:

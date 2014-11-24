@@ -1,30 +1,24 @@
-/* line 18, ../src/please_wait.scss */
-body * {
-  display: none !important;
-}
-/* line 22, ../src/please_wait.scss */
-body .pg-loading-screen {
-  display: block !important;
-}
-/* line 25, ../src/please_wait.scss */
-body .pg-loading-screen * {
-  display: block !important;
+/* line 17, ../src/please-wait.scss */
+body.pg-loaded {
+  opacity: 1;
+  -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -moz-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -ms-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -o-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 
-/* line 31, ../src/please_wait.scss */
+/* line 22, ../src/please-wait.scss */
 .pg-loading-screen {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  overflow-y: auto;
+  z-index: 1000000;
   opacity: 1;
 }
-/* line 43, ../src/please_wait.scss */
+/* line 31, ../src/please-wait.scss */
 .pg-loading-screen.pg-loaded {
   opacity: 0;
   -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -33,11 +27,11 @@ body .pg-loading-screen * {
   -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 49, ../src/please_wait.scss */
+/* line 37, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-spinner {
   opacity: 1;
 }
-/* line 53, ../src/please_wait.scss */
+/* line 41, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-spinner {
   -webkit-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -moz-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -45,7 +39,7 @@ body .pg-loading-screen * {
   -o-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 57, ../src/please_wait.scss */
+/* line 45, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-spinner {
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
@@ -53,7 +47,7 @@ body .pg-loading-screen * {
   -o-animation-delay: 0.3s;
   animation-delay: 0.3s;
 }
-/* line 62, ../src/please_wait.scss */
+/* line 50, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header, .pg-loading-screen .pg-loading-spinner {
   position: absolute;
   left: 0;
@@ -64,7 +58,7 @@ body .pg-loading-screen * {
   top: 0;
   height: 100%;
 }
-/* line 73, ../src/please_wait.scss */
+/* line 61, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header {
   -webkit-transform: translate3d(0, 25%, 0);
   -moz-transform: translate3d(0, 25%, 0);
@@ -73,11 +67,11 @@ body .pg-loading-screen * {
   transform: translate3d(0, 25%, 0);
   text-align: center;
 }
-/* line 77, ../src/please_wait.scss */
+/* line 65, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header img {
   display: inline-block !important;
 }
-/* line 82, ../src/please_wait.scss */
+/* line 70, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-spinner {
   -webkit-transform: translate3d(0, 55%, 0);
   -moz-transform: translate3d(0, 55%, 0);
