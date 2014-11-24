@@ -14,6 +14,11 @@
   }
 }
 
+body.pg-loaded {
+  opacity: 1;
+  @include prefixed(animation, pgAnimLoading 0.5s cubic-bezier(0.7,0,0.3,1) both);
+}
+
 .pg-loading-screen {
   position: fixed;
   bottom: 0;

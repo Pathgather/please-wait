@@ -26,7 +26,7 @@
     _pleaseWait =
       defaultOptions:
         backgroundColor:
-          default: '#f46d3b'
+          required: false
         logo:
           required: (options = {}) -> !options.template?
         spinnerTemplate:
@@ -41,22 +41,25 @@
           """
 
       done: ->
-        return if @_done || !@_loadingDiv?
-        @_done = true
-
+        return unless @_loadingDiv?
         transitionEvent = getTransitionEvent()
+        listener        = =>
+          document.body.removeChild(@_loadingDiv)
+          document.body.className += " pg-loaded"
+          if transitionEvent? then @_loadingDiv.removeEventListener(transitionEvent, listener)
+          @_loadingDiv = null
+
         if transitionEvent?
           @_loadingDiv.className  += " pg-loaded"
-          @_loadingDiv.addEventListener transitionEvent, () =>
-            @_loadingDone()
+          @_loadingDiv.addEventListener(transitionEvent, listener)
         else
-          @_loadingDone()
+          listener()
 
       load: (options = {}) ->
         @_options                          = @_createOptions(options)
         @_loadingDiv                       = document.createElement("header")
         @_loadingDiv.className             = "pg-loading-screen"
-        @_loadingDiv.style.backgroundColor = @_options.backgroundColor
+        @_loadingDiv.style.backgroundColor = @_options.backgroundColor if @_options.backgroundColor?
         @_loadingDiv.innerHTML             = @_options.template
         unless options.template?  # Initialize the default template with the logo and spinner
           spinnerTemplate                  = null
@@ -67,10 +70,7 @@
 
         document.body.appendChild(@_loadingDiv)
         @_loadingDiv.className += " pg-loading"
-
-      _loadingDone: ->
-        document.body.removeChild(@_loadingDiv)
-        document.body.className += " pg-loaded"
+        return @_loadingDiv
 
       _createOptions: (options = {}) ->
         defaultOptions = @defaultOptions
