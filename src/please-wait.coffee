@@ -23,13 +23,13 @@
       for key, val of transitions
         return val if el.style[key]?
 
+    transitionEvent = getTransitionEvent()
+
     _pleaseWait =
       defaultOptions:
         backgroundColor: null
-        message: null
-        showEllipsis: true
         logo: null
-        spinnerTemplate: null
+        loadingHtml: null
         template: """
           <div class='pg-loading-inner'>
             <div class='pg-loading-center-outer'>
@@ -37,9 +37,7 @@
                 <h1 class='pg-loading-logo-header'>
                   <img class='pg-loading-logo'></img>
                 </h1>
-                <p class='pg-loading-message'>
-                </p>
-                <div class='pg-loading-spinner'>
+                <div class='pg-loading-html'>
                 </div>
               </div>
             </div>
@@ -48,8 +46,7 @@
 
       done: ->
         return unless @_loadingDiv?
-        transitionEvent = getTransitionEvent()
-        listener        = =>
+        listener = =>
           document.body.removeChild(@_loadingDiv)
           document.body.className += " pg-loaded"
           if transitionEvent? then @_loadingDiv.removeEventListener(transitionEvent, listener)
@@ -61,41 +58,36 @@
         else
           listener()
 
+      updateLoadingHtml: (loadingHtml) ->
+        @_loadingHtmlToDisplay.push(options.loadingHtml)
+        if @_readyToShowLoadingHtml then @_changeLoadingHtml()
+
       load: (options = {}) ->
-        @_options                          = @_createOptions(options)
-        @_loadingDiv                       = document.createElement("header")
+        options                            = @_createOptions(options)
+        @_loadingDiv                       ||= document.createElement("header")
+        @_loadingHtmlToDisplay             = []
         @_loadingDiv.className             = "pg-loading-screen"
-        @_loadingDiv.style.backgroundColor = @_options.backgroundColor if @_options.backgroundColor?
-        @_loadingDiv.innerHTML             = @_options.template
-        spinnerDiv                         = @_loadingDiv.getElementsByClassName("pg-loading-spinner")[0]
+        @_loadingDiv.style.backgroundColor = options.backgroundColor if options.backgroundColor?
+        @_loadingDiv.innerHTML             = options.template
+        @_loadingHtml                      = @_loadingDiv.getElementsByClassName("pg-loading-html")[0]
+        @_loadingHtml.innerHTML            = options.loadingHtml if @_loadingHtml?
+        @_readyToShowLoadingHtml           = false
         logo                               = @_loadingDiv.getElementsByClassName("pg-loading-logo")[0]
-        messageDiv                         = @_loadingDiv.getElementsByClassName("pg-loading-message")[0]
-
-        if logo?
-          logo.src = @_options.logo
-
-        if spinnerDiv?
-          if @_options.spinnerTemplate?
-            spinnerDiv.innerHTML = @_options.spinnerTemplate
-          else
-            spinnerDiv.style.display = 'none'
-
-        if messageDiv?
-          if @_options.message?
-            messageDiv.innerHTML = if @_options.showEllipsis
-              """
-                #{@_options.message}
-                <span class='ellipsis one'>.</span>
-                <span class='ellipsis two'>.</span>
-                <span class='ellipsis three'>.</span>
-              """
-            else
-              @_options.message
-          else
-            messageDiv.style.display = 'none'
+        logo.src                           = options.logo if logo?
 
         document.body.appendChild(@_loadingDiv)
         @_loadingDiv.className += " pg-loading"
+
+        listener = =>
+          @_readyToShowLoadingHtml = true
+          if transitionEvent? then @_loadingDiv.removeEventListener(transitionEvent, listener)
+          if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
+
+        if transitionEvent?
+          @_loadingDiv.addEventListener(transitionEvent, listener)
+        else
+          listener()
+
         return @_loadingDiv
 
       _createOptions: (options = {}) ->
@@ -108,9 +100,34 @@
 
         newOptions
 
+      _changeLoadingHtml: ->
+        @_readyToShowLoadingHtml = false
+
+        loadingListener  = =>
+          @_readyToShowLoadingHtml = true
+          @_loadingHtml.className = @_loadingHtml.className.replace(" pg-loading ", "")
+          if transitionEvent? then @_loadingHtml.removeEventListener(transitionEvent, loadingListener)
+          if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
+
+        removingListener = =>
+          @_loadingHtml.innerHTML = @_loadingHtmlToDisplay.shift()
+          @_loadingHtml.className = @_loadingHtml.className.replace(" pg-removing ", " pg-loading ")
+          if transitionEvent?
+            @_loadingHtml.removeEventListener(transitionEvent, removingListener)
+            @_loadingHtml.addEventListener(transitionEvent, loadingListener)
+          else
+            loadingListener()
+
+        if transitionEvent?
+          @_loadingHtml.className += " pg-removing "
+          @_loadingHtml.addEventListener(transitionEvent, removingListener)
+        else
+          removingListener()
+
     return {
       start  : (options = {}) -> _pleaseWait.load(options)
       finish : -> _pleaseWait.done()
+      updateLoadingHtml: (html) -> _pleaseWait.updateLoadingHtml(html)
     }
 
   exports.pleaseWait = new PleaseWait()
