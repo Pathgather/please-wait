@@ -27,32 +27,54 @@ describe 'PleaseWait', ->
       document.body.innerHTML = originalHTML
 
     describe "when using the default template", ->
-      it "requires a logo", ->
-        expect(-> pleaseWait.start({logo: null, spinnerTemplate: "<div></div>"})).toThrowError("Option 'logo' is required")
+      describe "when setting a logo", ->
+        it "sets the logo", ->
+          pleaseWait.start({logo: "logo.png"})
+          addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+          logo = addedScreen.getElementsByClassName("pg-loading-logo")[0]
+          expect(logo.src).toContain("logo.png")
 
-      it "requires a spinner template", ->
-        expect(-> pleaseWait.start({logo: 'logo.png', spinnerTemplate: null})).toThrowError("Option 'spinnerTemplate' is required")
+      describe "when setting a spinner", ->
+        it "sets the spinner", ->
+          pleaseWait.start({spinnerTemplate: "<div>Spin!</div>"})
+          addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+          spinner = addedScreen.getElementsByClassName("pg-loading-spinner")[0]
+          expect(spinner.innerHTML).toEqual("<div>Spin!</div>")
 
-      it "adds the template to the body", ->
-        loadingScreen = pleaseWait.start({logo: 'logo.png', spinnerTemplate: "<div></div>"})
-        addedScreen   = document.body.getElementsByClassName("pg-loading-screen")[0]
-        expect(loadingScreen).toEqual(addedScreen)
-        expect(addedScreen.nodeName).toEqual("HEADER")
-        expect(loadingScreen.children[0].nodeName).toEqual("H1")
+      describe "when setting a message", ->
+        it "sets the message", ->
+          pleaseWait.start({message: "Hi!"})
+          addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+          message = addedScreen.getElementsByClassName("pg-loading-message")[0]
+          expect(message.innerHTML).toContain("Hi!")
 
     describe "when using a custom template", ->
-      it "does not require a logo", ->
-        expect(-> pleaseWait.start({logo: null, template: "<div></div>"})).not.toThrow()
-
-      it "does not require a spinner template", ->
-        expect(-> pleaseWait.start({spinnerTemplate: null, template: "<div></div>"})).not.toThrow()
-
       it "adds the template to the body", ->
-        loadingScreen = pleaseWait.start({logo: null, template: "<div></div>"})
+        loadingScreen = pleaseWait.start({template: "<div>LOADING!</div>"})
         addedScreen   = document.body.getElementsByClassName("pg-loading-screen")[0]
         expect(loadingScreen).toEqual(addedScreen)
-        expect(addedScreen.nodeName).toEqual("HEADER")
-        expect(loadingScreen.children[0].nodeName).toEqual("DIV")
+        expect(loadingScreen.innerHTML).toEqual("<div>LOADING!</div>")
+
+      describe "when the template has an img tag of class pg-loading-logo", ->
+        it "sets the logo", ->
+          pleaseWait.start({logo: "logo.png", template: "<div><img class='pg-loading-logo'></img></div>"})
+          addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+          logo = addedScreen.getElementsByClassName("pg-loading-logo")[0]
+          expect(logo.src).toContain("logo.png")
+
+      describe "when the template has an element of class pg-loading-spinner", ->
+        it "sets the spinner", ->
+          pleaseWait.start({spinnerTemplate: "<div>Spin!</div>", template: "<div><div class='pg-loading-spinner'></div></div>"})
+          addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+          spinner = addedScreen.getElementsByClassName("pg-loading-spinner")[0]
+          expect(spinner.innerHTML).toEqual("<div>Spin!</div>")
+
+      describe "when the template has an element of class pg-loading-message", ->
+        it "sets the message", ->
+          pleaseWait.start({message: "Hi!", template: "<div><div class='pg-loading-message'></div></div>"})
+          addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+          message = addedScreen.getElementsByClassName("pg-loading-message")[0]
+          expect(message.innerHTML).toContain("Hi!")
 
     describe "when specifying a background color", ->
       it "sets the loading screen's background color", ->
