@@ -16,7 +16,7 @@ module.exports = (grunt) ->
           cssDir: 'build'
     meta:
       banner: """
-        /**\n
+        /**
         * <%= pkg.name %>
         * <%= pkg.description %>\n
         * @author <%= pkg.author.name %> <<%= pkg.author.email %>>
@@ -60,7 +60,7 @@ module.exports = (grunt) ->
       options:
         banner: '<%= meta.banner %>'
       dist:
-        src: 'compile/**/*.js'
+        src: 'compile/please-wait.js'
         dest: 'build/please-wait.js'
     uglify:
       options:
