@@ -84,32 +84,33 @@
         if transitionEvent? then @_loadingHtmlElem.removeEventListener(transitionEvent, listener)
         if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
 
-      # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
-      if transitionEvent?
-        @_loadingHtmlElem.addEventListener(transitionEvent, listener)
-      else
-        listener()
-
-      # Define listeners for the transtioning out and in of new loading HTML/messages
-      @_loadingHtmlListener = =>
-        # New loading HTML has fully transitioned in. We're now ready to show a new message/HTML
-        @_readyToShowLoadingHtml = true
-        # Remove the CSS class that triggered the fade in animation
-        @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-loading ", "")
-        if transitionEvent? then @_loadingHtmlElem.removeEventListener(transitionEvent, @_loadingHtmlListener)
-        # Check if there's still HTML left in the queue to display. If so, let's show it
-        if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
-
-      @_removingHtmlListener = =>
-        # Last loading HTML to display has fully transitioned out. Time to transition the new in
-        @_loadingHtmlElem.innerHTML = @_loadingHtmlToDisplay.shift()
-        # Add the CSS class to trigger the fade in animation
-        @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-removing ", " pg-loading ")
+      if @_loadingHtmlElem?
+        # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
         if transitionEvent?
-          @_loadingHtmlElem.removeEventListener(transitionEvent, @_removingHtmlListener)
-          @_loadingHtmlElem.addEventListener(transitionEvent, @_loadingHtmlListener)
+          @_loadingHtmlElem.addEventListener(transitionEvent, listener)
         else
-          @_loadingHtmlListener()
+          listener()
+
+        # Define listeners for the transtioning out and in of new loading HTML/messages
+        @_loadingHtmlListener = =>
+          # New loading HTML has fully transitioned in. We're now ready to show a new message/HTML
+          @_readyToShowLoadingHtml = true
+          # Remove the CSS class that triggered the fade in animation
+          @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-loading ", "")
+          if transitionEvent? then @_loadingHtmlElem.removeEventListener(transitionEvent, @_loadingHtmlListener)
+          # Check if there's still HTML left in the queue to display. If so, let's show it
+          if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
+
+        @_removingHtmlListener = =>
+          # Last loading HTML to display has fully transitioned out. Time to transition the new in
+          @_loadingHtmlElem.innerHTML = @_loadingHtmlToDisplay.shift()
+          # Add the CSS class to trigger the fade in animation
+          @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-removing ", " pg-loading ")
+          if transitionEvent?
+            @_loadingHtmlElem.removeEventListener(transitionEvent, @_removingHtmlListener)
+            @_loadingHtmlElem.addEventListener(transitionEvent, @_loadingHtmlListener)
+          else
+            @_loadingHtmlListener()
 
     finish: ->
       return unless @_loadingElem?
@@ -133,6 +134,7 @@
         listener()
 
     updateLoadingHtml: (loadingHtml, immediately=false) ->
+      unless @_loadingHtmlElem? then throw new Error("The loading template does not have an element of class 'pg-loading-html'")
       if immediately
         # Ignore any loading HTML that may be queued up. Show this immediately
         @_loadingHtmlToDisplay = [loadingHtml]
