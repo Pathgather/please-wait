@@ -58,8 +58,13 @@
         else
           listener()
 
-      updateLoadingHtml: (loadingHtml) ->
-        @_loadingHtmlToDisplay.push(options.loadingHtml)
+      updateLoadingHtml: (loadingHtml, immediately=false) ->
+        if immediately
+          @_loadingHtmlToDisplay = [loadingHtml]
+          @_readyToShowLoadingHtml = true
+        else
+          @_loadingHtmlToDisplay.push(loadingHtml)
+
         if @_readyToShowLoadingHtml then @_changeLoadingHtml()
 
       load: (options = {}) ->
@@ -80,11 +85,11 @@
 
         listener = =>
           @_readyToShowLoadingHtml = true
-          if transitionEvent? then @_loadingDiv.removeEventListener(transitionEvent, listener)
+          if transitionEvent? then @_loadingHtml.removeEventListener(transitionEvent, listener)
           if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
 
         if transitionEvent?
-          @_loadingDiv.addEventListener(transitionEvent, listener)
+          @_loadingHtml.addEventListener(transitionEvent, listener)
         else
           listener()
 
