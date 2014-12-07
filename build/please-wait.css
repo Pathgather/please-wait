@@ -28,11 +28,11 @@ body.pg-loaded {
   animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 /* line 37, ../src/please-wait.scss */
-.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-spinner {
+.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
   opacity: 1;
 }
 /* line 41, ../src/please-wait.scss */
-.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-spinner {
+.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
   -webkit-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -moz-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -ms-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -40,7 +40,7 @@ body.pg-loaded {
   animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 /* line 45, ../src/please-wait.scss */
-.pg-loading-screen.pg-loading .pg-loading-spinner {
+.pg-loading-screen.pg-loading .pg-loading-html {
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
   -ms-animation-delay: 0.3s;
@@ -48,36 +48,66 @@ body.pg-loaded {
   animation-delay: 0.3s;
 }
 /* line 50, ../src/please-wait.scss */
-.pg-loading-screen .pg-loading-logo-header, .pg-loading-screen .pg-loading-spinner {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  cursor: default;
-  pointer-events: none;
-  top: 0;
+.pg-loading-screen .pg-loading-inner {
   height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: static;
 }
-/* line 61, ../src/please-wait.scss */
-.pg-loading-screen .pg-loading-logo-header {
-  -webkit-transform: translate3d(0, 25%, 0);
-  -moz-transform: translate3d(0, 25%, 0);
-  -ms-transform: translate3d(0, 25%, 0);
-  -o-transform: translate3d(0, 25%, 0);
-  transform: translate3d(0, 25%, 0);
+/* line 58, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-center-outer {
+  width: 100%;
+  padding: 0;
+  display: table !important;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+/* line 69, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-center-middle {
+  padding: 0;
+  vertical-align: middle;
+  display: table-cell  !important;
+  margin: 0;
   text-align: center;
 }
-/* line 65, ../src/please-wait.scss */
+/* line 77, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-logo-header, .pg-loading-screen .pg-loading-html {
+  width: 100%;
+  opacity: 0;
+}
+/* line 82, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-logo-header {
+  text-align: center;
+}
+/* line 85, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header img {
   display: inline-block !important;
 }
-/* line 70, ../src/please-wait.scss */
-.pg-loading-screen .pg-loading-spinner {
-  -webkit-transform: translate3d(0, 55%, 0);
-  -moz-transform: translate3d(0, 55%, 0);
-  -ms-transform: translate3d(0, 55%, 0);
-  -o-transform: translate3d(0, 55%, 0);
-  transform: translate3d(0, 55%, 0);
+/* line 90, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-html {
+  margin-top: 90px;
+}
+/* line 93, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-html.pg-removing {
+  opacity: 0;
+  -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -moz-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -ms-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+}
+/* line 98, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-html.pg-loading {
+  opacity: 1;
+  -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -moz-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -ms-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -o-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 
 @-webkit-keyframes pgAnimLoading {
