@@ -6,7 +6,8 @@
     <meta name="description" content="PleaseWait is a small Javascript library that shows a beautiful loading page for your SPA while it loads.">
     <meta name="keywords" content="pleasewait, loading, spa, indicator, javascript, css, pathgather, css3, github, html5">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="/favicon.ico?v=5" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="assets/favicon.ico?v=5" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="assets/css/please-wait.css" rel="stylesheet">
     <title>PleaseWait | A Loading Page for your SPA by Pathgather</title>
   </head>
   <body>
@@ -14,5 +15,11 @@
       <p>The background</p>
     </div>
     <script type="text/javascript" src="assets/please-wait.min.js"></script>
+    <script type="text/javascript">
+      var loadingScreen = window.pleaseWait({
+        logo: "assets/images/pathgather.png",
+        backgroundColor: '#f46d3b'
+      });
+    </script>
   </body>
 </html>
