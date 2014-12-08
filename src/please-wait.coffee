@@ -71,8 +71,8 @@
       # If true, we can transition immediately to a new message/HTML
       @_readyToShowLoadingHtml = false
       # Find the element that displays the loading logo and set the src if supplied
-      logoElem = @_loadingElem.getElementsByClassName("pg-loading-logo")[0]
-      logoElem.src = @options.logo if logoElem?
+      @_logoElem = @_loadingElem.getElementsByClassName("pg-loading-logo")[0]
+      @_logoElem.src = @options.logo if @_logoElem?
       # Add the loading screen to the body
       document.body.appendChild(@_loadingElem)
       # Add the CSS class that will trigger the initial transitions of the logo/loading HTML
@@ -132,6 +132,17 @@
         @_loadingElem.addEventListener(transitionEvent, listener)
       else
         listener()
+
+    updateOption: (option, value) ->
+      switch option
+        when 'backgroundColor'
+          @_loadingElem.style.backgroundColor = value
+        when 'logo'
+          @_logoElem.src = value
+        when 'loadingHtml'
+          @updateLoadingHtml(value)
+        else
+          throw new Error("Unknown option '#{option}'")
 
     updateLoadingHtml: (loadingHtml, immediately=false) ->
       unless @_loadingHtmlElem? then throw new Error("The loading template does not have an element of class 'pg-loading-html'")
