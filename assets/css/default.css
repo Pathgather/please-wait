@@ -1,0 +1,7 @@
+body .inner {
+  display: none;
+}
+
+body.pg-loaded .inner {
+  display: block;
+}
