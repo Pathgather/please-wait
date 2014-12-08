@@ -18,10 +18,12 @@ angular.module('pleaseWaitApp', [])
       '<div class="sk-spinner sk-spinner-fading-circle"><div class="sk-circle1 sk-circle"></div><div class="sk-circle2 sk-circle"></div><div class="sk-circle3 sk-circle"></div><div class="sk-circle4 sk-circle"></div><div class="sk-circle5 sk-circle"></div><div class="sk-circle6 sk-circle"></div><div class="sk-circle7 sk-circle"></div><div class="sk-circle8 sk-circle"></div><div class="sk-circle9 sk-circle"></div><div class="sk-circle10 sk-circle"></div><div class="sk-circle11 sk-circle"></div><div class="sk-circle12 sk-circle"></div></div>'
     ];
     $scope.please_wait_spinner_index = 0;
+    $scope.show_spinner = true;
 
     $scope.$watch('please_wait_spinner_index', function(val) {
       if(init) {
-        $scope.please_wait_options.loadingHtml = $scope.please_wait_spinners[$scope.please_wait_spinner_index];
+        $scope.show_spinner = true
+        $scope.please_wait_options.loadingHtml = $scope.please_wait_spinners[$scope.please_wait_spinner_index] + "<p>Have a wonderful day!</p>";
         $scope.updatePleaseWait();
       } else {
         init = true;
