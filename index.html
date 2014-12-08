@@ -8,26 +8,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="assets/favicon.ico?v=5" rel="shortcut icon" type="image/vnd.microsoft.icon">
     <link href="assets/css/please-wait.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link href="assets/css/default.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <title>PleaseWait | A Loading Page for your SPA by Pathgather</title>
   </head>
   <body ng-controller="MainCtrl">
     <div class="inner">
-      <p>The background</p>
+      <h1>How to use</h1>
     </div>
     <div class="toolbar">
-      <form ng-submit="updatePleaseWait()">
-        <input type="text" ng-model="please_wait_options.bg_color">
-        <button type="submit">
-          Submit
-        </button>
-      </form>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Options</h3>
+        </div>
+        <div class="panel-body">
+          <form ng-submit="updatePleaseWait()" role="form" class="form-horizontal">
+            <div class="form-group">
+              <label for="pwBackgroundColor" class="col-sm-3 control-label">Color</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-paint-brush"></i>
+                  </div>
+                  <input type="text" class="form-control" id="pwBackgroundColor" placeholder="Background color" ng-model="please_wait_options.backgroundColor">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pwSpinnerChoices" class="col-sm-3 control-label">Spinner</label>
+              <div class="col-sm-9">
+                <div class="btn-group btn-group-xs" role="group" aria-label="Spinners" id="pwSpinnerChoices">
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 0, 'btn-primary':please_wait_spinner_index == 0}" ng-click="please_wait_spinner_index = 0">1</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 1, 'btn-primary':please_wait_spinner_index == 1}" ng-click="please_wait_spinner_index = 1">2</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 2, 'btn-primary':please_wait_spinner_index == 2}" ng-click="please_wait_spinner_index = 2">3</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 3, 'btn-primary':please_wait_spinner_index == 3}" ng-click="please_wait_spinner_index = 3">4</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 4, 'btn-primary':please_wait_spinner_index == 4}" ng-click="please_wait_spinner_index = 4">5</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 5, 'btn-primary':please_wait_spinner_index == 5}" ng-click="please_wait_spinner_index = 5">6</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 6, 'btn-primary':please_wait_spinner_index == 6}" ng-click="please_wait_spinner_index = 6">7</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 7, 'btn-primary':please_wait_spinner_index == 7}" ng-click="please_wait_spinner_index = 7">8</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 8, 'btn-primary':please_wait_spinner_index == 8}" ng-click="please_wait_spinner_index = 8">9</button>
+                  <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 9, 'btn-primary':please_wait_spinner_index == 9}" ng-click="please_wait_spinner_index = 9">10</button>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
     <script type="text/javascript" src="assets/js/please-wait.min.js"></script>
     <script type="text/javascript">
-      var loadingScreen = window.pleaseWait({
+      window.loadingScreen = window.pleaseWait({
         logo: "assets/images/pathgather.png",
-        backgroundColor: '#f46d3b'
+        backgroundColor: '#f46d3b',
+        loadingHtml: '<div class="sk-spinner sk-spinner-rotating-plane"></div>'
       });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
