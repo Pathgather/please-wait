@@ -65,12 +65,16 @@
                   <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 8, 'btn-primary':please_wait_spinner_index == 8}" ng-click="please_wait_spinner_index = 8">9</button>
                   <button type="button" class="btn" ng-class="{'btn-default': please_wait_spinner_index != 9, 'btn-primary':please_wait_spinner_index == 9}" ng-click="please_wait_spinner_index = 9">10</button>
                 </div>
+                <p class='info'>
+                  Loading indicators via
+                  <a href='https://github.com/tobiasahlin/SpinKit' target='_blank'>SpinKit</a>.
+                </p>
               </div>
             </div>
             <div class="form-group">
               <label for="pwLoadingMessage" class="col-sm-3 control-label">Message</label>
               <div class="col-sm-9">
-                <textarea class="form-control" rows="3" ng-model="loading_message"></textarea>
+                <textarea class="form-control" rows="2" ng-model="loading_message"></textarea>
                 <button type="button" class="btn btn-default btn-xs" ng-click="randomizeMessage()">
                   Random
                 </button>

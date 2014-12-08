@@ -1,5 +1,10 @@
 body {
   position: relative;
+  font-family: "proxima-nova",sans-serif;
+}
+
+body p {
+  font-family: "proxima-nova",sans-serif;
 }
 
 body .inner {
@@ -11,8 +16,13 @@ body.pg-loaded .inner {
 }
 
 form textarea {
-  margin-bottom: 0.5em;
-  font-size: 12px;
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+form p.info {
+  margin-top: 4px;
+  font-size: 10px;
 }
 
 form .btn-group {
@@ -29,7 +39,6 @@ form.fake-login {
 }
 
 .pg-loading-screen .pg-loading-html p {
-  font-family: "proxima-nova",sans-serif;
   color: #FFF;
   font-weight: 300;
 }
