@@ -46,7 +46,7 @@
     };
 
     function PleaseWait(options) {
-      var defaultOptions, k, listener, logoElem, v;
+      var defaultOptions, k, listener, v;
       defaultOptions = this.constructor._defaultOptions;
       this.options = {};
       for (k in defaultOptions) {
@@ -65,9 +65,9 @@
         this._loadingHtmlElem.innerHTML = this.options.loadingHtml;
       }
       this._readyToShowLoadingHtml = false;
-      logoElem = this._loadingElem.getElementsByClassName("pg-loading-logo")[0];
-      if (logoElem != null) {
-        logoElem.src = this.options.logo;
+      this._logoElem = this._loadingElem.getElementsByClassName("pg-loading-logo")[0];
+      if (this._logoElem != null) {
+        this._logoElem.src = this.options.logo;
       }
       document.body.appendChild(this._loadingElem);
       this._loadingElem.className += " pg-loading";
@@ -135,6 +135,19 @@
         return this._loadingElem.addEventListener(transitionEvent, listener);
       } else {
         return listener();
+      }
+    };
+
+    PleaseWait.prototype.updateOption = function(option, value) {
+      switch (option) {
+        case 'backgroundColor':
+          return this._loadingElem.style.backgroundColor = value;
+        case 'logo':
+          return this._logoElem.src = value;
+        case 'loadingHtml':
+          return this.updateLoadingHtml(value);
+        default:
+          throw new Error("Unknown option '" + option + "'");
       }
     };
 
