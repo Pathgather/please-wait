@@ -1,6 +1,8 @@
 angular.module('pleaseWaitApp', [])
   .controller('MainCtrl', ['$scope', '$window', '$timeout', function($scope, $window, $timeout) {
     var init = false;
+    $scope.show_options = true;
+    $scope.show_demo = true;
     $scope.please_wait_options = {
       backgroundColor: '#f46d3b',
       loadingHtml: '<div class="sk-spinner sk-spinner-rotating-plane"></div>'
@@ -17,13 +19,26 @@ angular.module('pleaseWaitApp', [])
       '<div class="sk-spinner sk-spinner-cube-grid"><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div><div class="sk-cube"></div></div>',
       '<div class="sk-spinner sk-spinner-fading-circle"><div class="sk-circle1 sk-circle"></div><div class="sk-circle2 sk-circle"></div><div class="sk-circle3 sk-circle"></div><div class="sk-circle4 sk-circle"></div><div class="sk-circle5 sk-circle"></div><div class="sk-circle6 sk-circle"></div><div class="sk-circle7 sk-circle"></div><div class="sk-circle8 sk-circle"></div><div class="sk-circle9 sk-circle"></div><div class="sk-circle10 sk-circle"></div><div class="sk-circle11 sk-circle"></div><div class="sk-circle12 sk-circle"></div></div>'
     ];
+    $scope.random_messages = [
+      "Hey, we're hiring! Reach out at tech@pathgather.com",
+      "Hey you. Welcome back!",
+      "You look nice today",
+      "Amazing things come to those who wait",
+      "You usually have to wait for that which is worth waiting for",
+      "If you spend your whole life waiting for the storm, you'll never enjoy the sunshine",
+      "Don't wait for the perfect moment. Take the moment and make it perfect",
+      "Don't wait for opportunity. Create it.",
+      "Glorious things are waiting for you. We're just getting them ready."
+    ]
     $scope.please_wait_spinner_index = 0;
-    $scope.show_spinner = true;
+    $scope.loading_message = $window.default_message;
+    updateLoadingHtml = function() {
+      $scope.please_wait_options.loadingHtml = "<p class='loading-message'>" + $scope.loading_message + "</p>" + $scope.please_wait_spinners[$scope.please_wait_spinner_index];
+    };
 
     $scope.$watch('please_wait_spinner_index', function(val) {
       if(init) {
-        $scope.show_spinner = true
-        $scope.please_wait_options.loadingHtml = $scope.please_wait_spinners[$scope.please_wait_spinner_index] + "<p>Have a wonderful day!</p>";
+        updateLoadingHtml();
         $scope.updatePleaseWait();
       } else {
         init = true;
@@ -31,6 +46,50 @@ angular.module('pleaseWaitApp', [])
     });
 
     $scope.updatePleaseWait = function() {
-      $window.loadingScreen.updateOptions($scope.please_wait_options);
+      updateLoadingHtml();
+      $window.loading_screen.updateOptions($scope.please_wait_options);
+    };
+
+    $scope.randomizeMessage = function() {
+      $scope.loading_message = $scope.random_messages[Math.floor(Math.random() * $scope.random_messages.length)];
+      updateLoadingHtml();
+      $window.loading_screen.updateOptions($scope.please_wait_options);
+    };
+
+    $scope.showLoginForm = function() {
+      $window.loading_screen.updateOption('loadingHtml',
+        '<form role="form" class="form-horizontal fake-login">' +
+        '<p>Please login in order to proceed</p>' +
+        '<div class="form-group">' +
+        '<div class="input-group">' +
+        '<div class="input-group-addon">' +
+        '<i class="fa fa-envelope"></i>' +
+        '</div>' +
+        '<input type="email" class="form-control" id="pwFakeEmail" placeholder="Email">' +
+        '</div>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<div class="input-group">' +
+        '<div class="input-group-addon">' +
+        '<i class="fa fa-key"></i>' +
+        '</div>' +
+        '<input type="password" class="form-control" id="pwFakePassword" placeholder="Password">' +
+        '</div>' +
+        '</div>' +
+        '</form>'
+      )
+    };
+
+    $scope.toggleDemo = function() {
+      $scope.show_demo = !$scope.show_demo;
+      if($scope.show_demo) {
+        $window.loading_screen = $window.pleaseWait({
+          logo: "assets/images/pathgather.png",
+          backgroundColor: '#f46d3b',
+          loadingHtml: "<p class='loading-message'>" + $window.default_message + "</p><div class='sk-spinner sk-spinner-rotating-plane'></div>"
+        });
+      } else {
+        $window.loading_screen.finish();
+      }
     };
   }]);

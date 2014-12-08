@@ -12,10 +12,39 @@ body.pg-loaded .inner {
 
 form textarea {
   margin-bottom: 0.5em;
+  font-size: 12px;
 }
 
 form .btn-group {
   margin-top: 0.5em;
+}
+
+form.fake-login {
+  width: 300px;
+  margin: 50px auto 0 auto;
+}
+
+.pg-loading-screen .pg-loading-html {
+  margin-top: 20px;
+}
+
+.pg-loading-screen .pg-loading-html p {
+  font-family: "proxima-nova",sans-serif;
+  color: #FFF;
+  font-weight: 300;
+}
+
+.pg-loading-screen .pg-loading-html p.loading-message {
+  font-style: italic;
+  font-size: 20px;
+  margin-bottom: 100px;
+}
+
+.close-please-wait {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  z-index: 10000000;
 }
 
 .toolbar {
@@ -24,6 +53,10 @@ form .btn-group {
   bottom: 10px;
   z-index: 10000000;
   max-width: 300px;
+}
+
+.toolbar .panel {
+  width: 300px;
 }
 
 /***************************************
