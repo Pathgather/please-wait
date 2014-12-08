@@ -151,6 +151,19 @@
       }
     };
 
+    PleaseWait.prototype.updateOptions = function(options) {
+      var k, v, _results;
+      if (options == null) {
+        options = {};
+      }
+      _results = [];
+      for (k in options) {
+        v = options[k];
+        _results.push(this.updateOption(k, v));
+      }
+      return _results;
+    };
+
     PleaseWait.prototype.updateLoadingHtml = function(loadingHtml, immediately) {
       if (immediately == null) {
         immediately = false;

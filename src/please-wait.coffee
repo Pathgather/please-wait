@@ -144,6 +144,10 @@
         else
           throw new Error("Unknown option '#{option}'")
 
+    updateOptions: (options={}) ->
+      for k, v of options
+        @updateOption(k, v)
+
     updateLoadingHtml: (loadingHtml, immediately=false) ->
       unless @_loadingHtmlElem? then throw new Error("The loading template does not have an element of class 'pg-loading-html'")
       if immediately
