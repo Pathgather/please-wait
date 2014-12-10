@@ -1,17 +1,30 @@
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   position: relative;
   font-family: "raleway",sans-serif;
+  height: 100%;
+  overflow: hidden;
 }
 
 body p {
   font-family: "raleway",sans-serif;
 }
 
-body .container {
+body .inner {
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 60px;
+  right: 0;
+  margin: auto auto;
 }
 
-body.pg-loaded .container {
+body.pg-loaded .inner {
   display: block;
 }
 
@@ -25,11 +38,28 @@ body.pg-loaded .container {
   font-size: 32px;
 }
 
+.container section.header h4 {
+  font-weight: 300;
+  margin-top: 15px;
+}
+
 .container section.header button {
   margin-top: 25px;
   text-transform: uppercase;
   font-weight: 300;
   font-size: 14px;
+}
+
+.container section.header .info {
+  margin-top: 100px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 60px;
 }
 
 form textarea {

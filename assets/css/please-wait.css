@@ -17,8 +17,14 @@ body.pg-loaded {
   top: 0;
   z-index: 1000000;
   opacity: 1;
+  background-color: #FFF;
+  -webkit-transition: background-color 0.6s ease-in-out 0s;
+  -moz-transition: background-color 0.6s ease-in-out 0s;
+  -ms-transition: background-color 0.6s ease-in-out 0s;
+  -o-transition: background-color 0.6s ease-in-out 0s;
+  transition: background-color 0.6s ease-in-out 0s;
 }
-/* line 31, ../src/please-wait.scss */
+/* line 33, ../src/please-wait.scss */
 .pg-loading-screen.pg-loaded {
   opacity: 0;
   -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -27,11 +33,11 @@ body.pg-loaded {
   -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 37, ../src/please-wait.scss */
+/* line 39, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
   opacity: 1;
 }
-/* line 41, ../src/please-wait.scss */
+/* line 43, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
   -webkit-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -moz-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -39,7 +45,7 @@ body.pg-loaded {
   -o-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 45, ../src/please-wait.scss */
+/* line 47, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-html {
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
@@ -47,7 +53,7 @@ body.pg-loaded {
   -o-animation-delay: 0.3s;
   animation-delay: 0.3s;
 }
-/* line 50, ../src/please-wait.scss */
+/* line 52, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-inner {
   height: 100%;
   width: 100%;
@@ -55,7 +61,7 @@ body.pg-loaded {
   padding: 0;
   position: static;
 }
-/* line 58, ../src/please-wait.scss */
+/* line 60, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-center-outer {
   width: 100%;
   padding: 0;
@@ -66,7 +72,7 @@ body.pg-loaded {
   left: 0;
   margin: 0;
 }
-/* line 69, ../src/please-wait.scss */
+/* line 71, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-center-middle {
   padding: 0;
   vertical-align: middle;
@@ -74,24 +80,24 @@ body.pg-loaded {
   margin: 0;
   text-align: center;
 }
-/* line 77, ../src/please-wait.scss */
+/* line 79, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header, .pg-loading-screen .pg-loading-html {
   width: 100%;
   opacity: 0;
 }
-/* line 82, ../src/please-wait.scss */
+/* line 84, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header {
   text-align: center;
 }
-/* line 85, ../src/please-wait.scss */
+/* line 87, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header img {
   display: inline-block !important;
 }
-/* line 90, ../src/please-wait.scss */
+/* line 92, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-html {
   margin-top: 90px;
 }
-/* line 93, ../src/please-wait.scss */
+/* line 95, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-html.pg-removing {
   opacity: 0;
   -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -100,7 +106,7 @@ body.pg-loaded {
   -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 98, ../src/please-wait.scss */
+/* line 100, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-html.pg-loading {
   opacity: 1;
   -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;

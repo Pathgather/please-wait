@@ -16,15 +16,29 @@
     <script>try{Typekit.load();}catch(e){}</script>
   </head>
   <body ng-controller="MainCtrl">
-    <div class="container">
-      <section class="header">
-        <h2>PleaseWait.js</h2>
-        <h4>A simple library to show your users a beautiful splash page while your application loads.</h4>
-        <button type="button" ng-click="toggleDemo()" class="btn btn-primary btn-lg">
-          <span>Launch demo</span>
-        </button>
-      </section>
+    <div class="inner">
+      <div class="container">
+        <section class="header">
+          <h2>PleaseWait.js</h2>
+          <h4>A simple library to show your users a beautiful splash page while your application loads.</h4>
+          <button type="button" ng-click="toggleDemo()" class="btn btn-primary btn-lg">
+            <span>Launch demo</span>
+          </button>
+        </section>
+      </div>
     </div>
+    <footer>
+      <a href="pathgather.com" target="_blank">
+        A project from Pathgather
+      </a>
+      <a class="label label-info" href="http://www.pathgather.com/jobs/" target="_blank">
+        We're Hiring!
+      </a>
+      <a href="https://github.com/Pathgather/please-wait" target="_blank">
+        <i class="fa fa-github"></i>
+        View on Github
+      </a>
+    </footer>
     <h4 class='close-please-wait' ng-show="show_demo">
       <a class='label label-info' ng-click="toggleDemo()" href='#' onclick='return false;'>
         <i class="fa fa-times"></i>
