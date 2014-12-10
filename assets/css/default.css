@@ -57,10 +57,10 @@ body.pg-loaded .inner {
 
 footer {
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
   left: 0;
   right: 0;
-  line-height: 60px;
+  height: 40px;
 }
 
 footer .promotion {
