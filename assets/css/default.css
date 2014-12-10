@@ -40,11 +40,10 @@ form.fake-login {
 
 .pg-loading-screen .pg-loading-html p {
   color: #FFF;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .pg-loading-screen .pg-loading-html p.loading-message {
-  font-style: italic;
   font-size: 20px;
   margin-bottom: 100px;
 }
