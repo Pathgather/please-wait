@@ -30,7 +30,7 @@ angular.module('pleaseWaitApp', [])
       "Don't wait for opportunity. Create it.",
       "Glorious things are waiting for you. We're just getting them ready."
     ]
-    $scope.please_wait_spinner_index = 0;
+    $scope.please_wait_spinner_index = 2;
     $scope.loading_message = $window.default_message;
     updateLoadingHtml = function() {
       $scope.please_wait_options.loadingHtml = "<p class='loading-message'>" + $scope.loading_message + "</p>" + $scope.please_wait_spinners[$scope.please_wait_spinner_index];

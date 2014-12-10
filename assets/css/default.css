@@ -7,12 +7,29 @@ body p {
   font-family: "raleway",sans-serif;
 }
 
-body .inner {
+body .container {
   display: none;
 }
 
-body.pg-loaded .inner {
+body.pg-loaded .container {
   display: block;
+}
+
+.container section.header {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.container section.header h2 {
+  font-weight: 300;
+  font-size: 32px;
+}
+
+.container section.header button {
+  margin-top: 25px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 14px;
 }
 
 form textarea {
@@ -40,7 +57,7 @@ form.fake-login {
 
 .pg-loading-screen .pg-loading-html p {
   color: #FFF;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 .pg-loading-screen .pg-loading-html p.loading-message {
