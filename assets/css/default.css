@@ -29,8 +29,9 @@ body.pg-loaded .inner {
 }
 
 .container section.header {
-  margin-top: 50px;
+  padding-top: 50px;
   text-align: center;
+  position: relative;
 }
 
 .container section.header h2 {
@@ -60,6 +61,27 @@ footer {
   left: 0;
   right: 0;
   line-height: 60px;
+}
+
+footer .promotion {
+  position: absolute;
+  padding-left: 20px;
+  left: 0;
+  bottom: 0;
+  width: 50%;
+}
+
+footer .promotion .label {
+  margin-left: 5px;
+}
+
+footer .github {
+  text-align: right;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-right: 20px;
+  width: 50%;
 }
 
 form textarea {
