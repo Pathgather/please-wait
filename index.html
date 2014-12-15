@@ -25,6 +25,30 @@
             <span>Launch demo</span>
           </button>
         </section>
+        <section class="instructions">
+          <h3>To Use</h3>
+          <section>
+            <h4>Step 1: Install</h4>
+            <code>bower install please-wait</code>
+          </section>
+          <section>
+            <h4>Step 2: Include in your HTML</h4>
+            <p>
+              Include the please-wait.css file in your <code>&lt;head&gt;</code> tag/in your normal workflow.
+            </p>
+            <p>
+              You can include the please-wait.js file at the end of your body, but above your other <code>&lt;script&gt;</code> tag(s) if you like. This allows you to use PleaseWait immediately and show a loading page while the browser downloads the rest of your Javascript. Of course, this is optional. Feel free to roll the PleaseWait library into your normal, minified JS file if you prefer.
+            </p>
+            <script src="https://gist.github.com/jhdavids8/7000c8ec09021a56f413.js"></script>
+          </section>
+          <section>
+            <h4>Step 3: Hide initial HTML flash</h4>
+            <p>
+              Optional: If your initial template has some styled HTML by default (like a toolbar), you'll probably want to hide that, or your users could see a quick flash of your normal template, followed by the loading screen. This is easy to do by wrapping the HTML in your body in a div, and hiding/showing that when things are ready. PleaseWait adds a class of 'pg-loaded' to your <code>&lt;body&gt;</code> when it's done.
+            </p>
+            <script src="https://gist.github.com/jhdavids8/26a4bf10cf3c59366c7c.js"></script>
+          </section>
+        </section>
       </div>
     </div>
     <footer>

@@ -52,7 +52,7 @@ body.pg-loaded .inner {
 }
 
 .container section.header .info {
-  margin-top: 100px;
+  margin-top: 90px;
 }
 
 footer {
@@ -104,7 +104,7 @@ form.fake-login {
 }
 
 .pg-loading-screen .pg-loading-html {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .pg-loading-screen .pg-loading-html p {
