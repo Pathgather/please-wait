@@ -1,9 +1,10 @@
-Please Wait
+PleaseWait.js
 ===========
+A simple library to show your users a beautiful splash page while your application loads.
 
-### Recommended
-Wrap your current body contents in a div that his hidden until the body has the class 'pg-loaded'
-
+Documentation and Demo
+---------------------
+Documentation and demo can be found [here](http://pathgather.github.io/please-wait/).
 
 About Pathgather
 ---------------------
