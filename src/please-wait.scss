@@ -19,6 +19,10 @@ body.pg-loaded {
   @include prefixed(animation, pgAnimLoading 0.5s cubic-bezier(0.7,0,0.3,1) both);
 }
 
+body.pg-loading {
+  overflow: hidden;
+}
+
 .pg-loading-screen {
   position: fixed;
   bottom: 0;

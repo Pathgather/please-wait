@@ -74,6 +74,7 @@
       @_logoElem = @_loadingElem.getElementsByClassName("pg-loading-logo")[0]
       @_logoElem.src = @options.logo if @_logoElem?
       # Add the loading screen to the body
+      document.body.className += " pg-loading "
       document.body.appendChild(@_loadingElem)
       # Add the CSS class that will trigger the initial transitions of the logo/loading HTML
       @_loadingElem.className += " pg-loading"
@@ -119,7 +120,7 @@
         # Remove the loading screen from the body
         document.body.removeChild(@_loadingElem)
         # Add a class to the body to signal that the loading screen has finished and the app is ready
-        document.body.className += " pg-loaded"
+        document.body.className = document.body.className.replace(" pg-loading ", " pg-loaded ")
         if transitionEvent? then @_loadingElem.removeEventListener(transitionEvent, listener)
         # Reset the loading screen element since it's no longer attached to the DOM
         @_loadingElem = null

@@ -69,6 +69,7 @@
       if (this._logoElem != null) {
         this._logoElem.src = this.options.logo;
       }
+      document.body.className += " pg-loading ";
       document.body.appendChild(this._loadingElem);
       this._loadingElem.className += " pg-loading";
       listener = (function(_this) {
@@ -123,7 +124,7 @@
       listener = (function(_this) {
         return function() {
           document.body.removeChild(_this._loadingElem);
-          document.body.className += " pg-loaded";
+          document.body.className = document.body.className.replace(" pg-loading ", " pg-loaded ");
           if (transitionEvent != null) {
             _this._loadingElem.removeEventListener(transitionEvent, listener);
           }
