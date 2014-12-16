@@ -15,16 +15,13 @@ body.pg-loaded .inner {
   display: block;
 }
 
-.container section {
-  border-bottom: 1px solid #EEE;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-}
-
 .container section.header {
   padding-top: 50px;
   text-align: center;
   position: relative;
+  border-bottom: 1px solid #EEE;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .container section.header h2 {
@@ -48,52 +45,10 @@ body.pg-loaded .inner {
   margin-top: 90px;
 }
 
-footer {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  height: 40px;
-}
-
-footer .promotion {
-  position: absolute;
-  padding-left: 20px;
-  left: 0;
-  bottom: 0;
-  width: 50%;
-}
-
-footer .promotion .label {
-  margin-left: 5px;
-}
-
-footer .github {
-  text-align: right;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding-right: 20px;
-  width: 50%;
-}
-
-form textarea {
-  margin-bottom: 4px;
-  font-size: 10px;
-}
-
-form p.info {
-  margin-top: 4px;
-  font-size: 10px;
-}
-
-form .btn-group {
-  margin-top: 0.5em;
-}
-
-form.fake-login {
-  width: 300px;
-  margin: 50px auto 0 auto;
+.container section.instructions > section {
+  border-bottom: 1px solid #EEE;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .pg-loading-screen .pg-loading-html {
