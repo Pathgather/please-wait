@@ -17,6 +17,28 @@
   </head>
   <body ng-controller="MainCtrl">
     <div class="inner">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Brand</a>
+          </div>
+          <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       <div class="container">
         <section class="header">
           <h2>PleaseWait.js</h2>
@@ -47,6 +69,31 @@
               Optional: If your initial template has some styled HTML by default (like a toolbar), you'll probably want to hide that, or your users could see a quick flash of your normal template, followed by the loading screen. This is easy to do by wrapping the HTML in your body in a div, and hiding/showing that when things are ready. PleaseWait adds a class of 'pg-loaded' to your <code>&lt;body&gt;</code> when it's done.
             </p>
             <script src="https://gist.github.com/jhdavids8/26a4bf10cf3c59366c7c.js"></script>
+          </section>
+          <section>
+            <h4>Step 4: Show the loading screen</h4>
+            <p>
+              As soon as possible in your app, call <code>pleaseWait</code> to trigger the loading screen. Right now, the API is quite simple. Valid options are:
+              <ul>
+                <li><code>backgroundColor</code> - Needs to be a valid CSS color.</li>
+                <li><code>logo</code> - The URL to a logo to display. The <code>src</code> attribute of an <code>img</code> tag will be set to this value.</li>
+                <li><code>loadingHtml</code> - HTML to display below the logo. Can be a message, spinner, or any HTML you want. See <a href="http://tobiasahlin.com/spinkit/" target="_blank">SpinKit</a> for some great HTML/CSS3 spinners.</li>
+              </ul>
+              pleaseWait returns the loading screen when called. You'll want to save this in order to close the loading screen later.
+            </p>
+            <script src="https://gist.github.com/jhdavids8/885fc10cf53e50c4425a.js"></script>
+          </section>
+          <section>
+            <h4>Step 5: Close the loading screen</h4>
+            <p>
+              Whenever you're app is ready for the user, call <code>finish()</code> on the returned object from the <code>pleaseWait</code> call. This will fade the screen out.
+            </p>
+          </section>
+          <section>
+            <h4>Bonus Section! Update the HTML</h4>
+            <p>
+              If you want to update the <code>loadingHtml</code> displayed, call <code>updateLoadingHtml(html)</code> on the returned object from <code>pleaseWait</code>. This, by default, will fade the current HTML out and the given HTML in. This is useful if you want to cycle through messages (in case your app takes a good bit of time to load), show a login form within the loading screen, etc.
+            </p>
           </section>
         </section>
       </div>
