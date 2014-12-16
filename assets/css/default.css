@@ -1,13 +1,6 @@
-html {
-  height: 100%;
-  overflow: hidden;
-}
-
 body {
   position: relative;
   font-family: "raleway",sans-serif;
-  height: 100%;
-  overflow: hidden;
 }
 
 body p {
@@ -16,12 +9,6 @@ body p {
 
 body .inner {
   display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 60px;
-  right: 0;
-  margin: auto auto;
 }
 
 body.pg-loaded .inner {
