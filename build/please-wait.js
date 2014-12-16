@@ -18,25 +18,36 @@
     factory(root);
   }
 })(this, function(exports) {
-  var PleaseWait, getTransitionEvent, pleaseWait, transitionEvent;
-  getTransitionEvent = function() {
-    var el, key, transitions, val;
-    el = document.createElement('fakeelement');
-    transitions = {
-      'WebkitAnimation': 'webkitAnimationEnd',
-      'OAnimation': 'oAnimationEnd',
-      'msAnimation': 'MSAnimationEnd',
-      'MozAnimation': 'mozAnimationEnd',
-      'animation': 'animationend'
-    };
-    for (key in transitions) {
-      val = transitions[key];
-      if (el.style[key] != null) {
-        return val;
+  var PleaseWait, animationSupport, domPrefixes, elm, pfx, pleaseWait, transitionEvent, _i, _len;
+  elm = document.createElement('fakeelement');
+  animationSupport = false;
+  transitionEvent = 'animationend';
+  domPrefixes = 'Webkit Moz O ms'.split(' ');
+  if (elm.style.animationName != null) {
+    animationSupport = true;
+  }
+  if (!animationSupport) {
+    for (_i = 0, _len = domPrefixes.length; _i < _len; _i++) {
+      pfx = domPrefixes[_i];
+      if (elm.style["" + pfx + "AnimationName"] != null) {
+        switch (pfx) {
+          case 'Webkit':
+            transitionEvent = 'webkitAnimationEnd';
+            break;
+          case 'Moz':
+            transitionEvent = 'animationend';
+            break;
+          case 'O':
+            transitionEvent = 'oanimationend';
+            break;
+          case 'ms':
+            transitionEvent = 'MSAnimationEnd';
+        }
+        animationSupport = true;
+        break;
       }
     }
-  };
-  transitionEvent = getTransitionEvent();
+  }
   PleaseWait = (function() {
     PleaseWait._defaultOptions = {
       backgroundColor: null,
@@ -75,7 +86,7 @@
       listener = (function(_this) {
         return function() {
           _this._readyToShowLoadingHtml = true;
-          if (transitionEvent != null) {
+          if (animationSupport) {
             _this._loadingHtmlElem.removeEventListener(transitionEvent, listener);
           }
           if (_this._loadingHtmlToDisplay.length > 0) {
@@ -84,7 +95,7 @@
         };
       })(this);
       if (this._loadingHtmlElem != null) {
-        if (transitionEvent != null) {
+        if (animationSupport) {
           this._loadingHtmlElem.addEventListener(transitionEvent, listener);
         } else {
           listener();
@@ -93,7 +104,7 @@
           return function() {
             _this._readyToShowLoadingHtml = true;
             _this._loadingHtmlElem.className = _this._loadingHtmlElem.className.replace(" pg-loading ", "");
-            if (transitionEvent != null) {
+            if (animationSupport) {
               _this._loadingHtmlElem.removeEventListener(transitionEvent, _this._loadingHtmlListener);
             }
             if (_this._loadingHtmlToDisplay.length > 0) {
@@ -105,7 +116,7 @@
           return function() {
             _this._loadingHtmlElem.innerHTML = _this._loadingHtmlToDisplay.shift();
             _this._loadingHtmlElem.className = _this._loadingHtmlElem.className.replace(" pg-removing ", " pg-loading ");
-            if (transitionEvent != null) {
+            if (animationSupport) {
               _this._loadingHtmlElem.removeEventListener(transitionEvent, _this._removingHtmlListener);
               return _this._loadingHtmlElem.addEventListener(transitionEvent, _this._loadingHtmlListener);
             } else {
@@ -125,13 +136,13 @@
         return function() {
           document.body.removeChild(_this._loadingElem);
           document.body.className = document.body.className.replace("pg-loading", "pg-loaded");
-          if (transitionEvent != null) {
+          if (animationSupport) {
             _this._loadingElem.removeEventListener(transitionEvent, listener);
           }
           return _this._loadingElem = null;
         };
       })(this);
-      if (transitionEvent != null) {
+      if (animationSupport) {
         this._loadingElem.className += " pg-loaded";
         return this._loadingElem.addEventListener(transitionEvent, listener);
       } else {

@@ -10,19 +10,27 @@
     factory root
   return
 ) this, (exports) ->
-  getTransitionEvent = ->
-    el = document.createElement('fakeelement')
-    transitions =
-      'WebkitAnimation': 'webkitAnimationEnd',
-      'OAnimation': 'oAnimationEnd',
-      'msAnimation': 'MSAnimationEnd',
-      'MozAnimation': 'mozAnimationEnd'
-      'animation' : 'animationend'
+  elm = document.createElement('fakeelement')
+  animationSupport = false
+  transitionEvent = 'animationend'
+  domPrefixes = 'Webkit Moz O ms'.split(' ')
 
-    for key, val of transitions
-      return val if el.style[key]?
+  if elm.style.animationName? then animationSupport = true
 
-  transitionEvent = getTransitionEvent()
+  if !animationSupport
+    for pfx in domPrefixes
+      if elm.style["#{pfx}AnimationName"]?
+        switch pfx
+          when 'Webkit'
+            transitionEvent = 'webkitAnimationEnd'
+          when 'Moz'
+            transitionEvent = 'animationend'
+          when 'O'
+            transitionEvent = 'oanimationend'
+          when 'ms'
+            transitionEvent = 'MSAnimationEnd'
+        animationSupport = true
+        break
 
   class PleaseWait
     @_defaultOptions:
@@ -82,12 +90,12 @@
       # Define a listener to look for any new loading HTML that needs to be displayed after the intiial transition finishes
       listener = =>
         @_readyToShowLoadingHtml = true
-        if transitionEvent? then @_loadingHtmlElem.removeEventListener(transitionEvent, listener)
+        if animationSupport then @_loadingHtmlElem.removeEventListener(transitionEvent, listener)
         if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
 
       if @_loadingHtmlElem?
         # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
-        if transitionEvent?
+        if animationSupport
           @_loadingHtmlElem.addEventListener(transitionEvent, listener)
         else
           listener()
@@ -98,7 +106,7 @@
           @_readyToShowLoadingHtml = true
           # Remove the CSS class that triggered the fade in animation
           @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-loading ", "")
-          if transitionEvent? then @_loadingHtmlElem.removeEventListener(transitionEvent, @_loadingHtmlListener)
+          if animationSupport then @_loadingHtmlElem.removeEventListener(transitionEvent, @_loadingHtmlListener)
           # Check if there's still HTML left in the queue to display. If so, let's show it
           if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
 
@@ -107,7 +115,7 @@
           @_loadingHtmlElem.innerHTML = @_loadingHtmlToDisplay.shift()
           # Add the CSS class to trigger the fade in animation
           @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-removing ", " pg-loading ")
-          if transitionEvent?
+          if animationSupport
             @_loadingHtmlElem.removeEventListener(transitionEvent, @_removingHtmlListener)
             @_loadingHtmlElem.addEventListener(transitionEvent, @_loadingHtmlListener)
           else
@@ -121,12 +129,12 @@
         document.body.removeChild(@_loadingElem)
         # Add a class to the body to signal that the loading screen has finished and the app is ready
         document.body.className = document.body.className.replace("pg-loading", "pg-loaded")
-        if transitionEvent? then @_loadingElem.removeEventListener(transitionEvent, listener)
+        if animationSupport then @_loadingElem.removeEventListener(transitionEvent, listener)
         # Reset the loading screen element since it's no longer attached to the DOM
         @_loadingElem = null
 
       # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
-      if transitionEvent?
+      if animationSupport
         # Set a class on the loading screen to trigger a fadeout animation
         @_loadingElem.className += " pg-loaded"
         # When the loading screen is finished fading out, we'll remove it from the DOM
