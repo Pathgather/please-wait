@@ -7,12 +7,13 @@ body p {
   font-family: "raleway",sans-serif;
 }
 
-body .inner {
-  display: none;
-}
-
-body.pg-loaded .inner {
-  display: block;
+body.pg-loaded {
+  opacity: 1;
+  -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -moz-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -ms-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  -o-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+  animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 
 .container section.header {
@@ -805,3 +806,29 @@ Spinners
 
   40% {
     opacity: 1; } }
+
+@-webkit-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-moz-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-o-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@-ms-keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pgAnimLoading {
+  from {
+    opacity: 0;
+  }
+}
