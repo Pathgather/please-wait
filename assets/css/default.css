@@ -84,6 +84,10 @@ body.pg-loaded .inner {
   width: 300px;
 }
 
+.toolbar .info {
+  margin-top: 5px;
+}
+
 /***************************************
 Spinners
 ****************************************/
