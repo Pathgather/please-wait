@@ -1,19 +1,9 @@
 /* line 17, ../src/please-wait.scss */
-body.pg-loaded {
-  opacity: 1;
-  -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -moz-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -ms-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -o-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-}
-
-/* line 22, ../src/please-wait.scss */
 body.pg-loading {
   overflow: hidden;
 }
 
-/* line 26, ../src/please-wait.scss */
+/* line 21, ../src/please-wait.scss */
 .pg-loading-screen {
   position: fixed;
   bottom: 0;
@@ -29,7 +19,7 @@ body.pg-loading {
   -o-transition: background-color 0.6s ease-in-out 0s;
   transition: background-color 0.6s ease-in-out 0s;
 }
-/* line 37, ../src/please-wait.scss */
+/* line 32, ../src/please-wait.scss */
 .pg-loading-screen.pg-loaded {
   opacity: 0;
   -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -38,11 +28,11 @@ body.pg-loading {
   -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 43, ../src/please-wait.scss */
+/* line 38, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
   opacity: 1;
 }
-/* line 47, ../src/please-wait.scss */
+/* line 42, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
   -webkit-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -moz-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -50,7 +40,7 @@ body.pg-loading {
   -o-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 51, ../src/please-wait.scss */
+/* line 46, ../src/please-wait.scss */
 .pg-loading-screen.pg-loading .pg-loading-html {
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
@@ -58,7 +48,7 @@ body.pg-loading {
   -o-animation-delay: 0.3s;
   animation-delay: 0.3s;
 }
-/* line 56, ../src/please-wait.scss */
+/* line 51, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-inner {
   height: 100%;
   width: 100%;
@@ -66,7 +56,7 @@ body.pg-loading {
   padding: 0;
   position: static;
 }
-/* line 64, ../src/please-wait.scss */
+/* line 59, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-center-outer {
   width: 100%;
   padding: 0;
@@ -77,7 +67,7 @@ body.pg-loading {
   left: 0;
   margin: 0;
 }
-/* line 75, ../src/please-wait.scss */
+/* line 70, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-center-middle {
   padding: 0;
   vertical-align: middle;
@@ -85,24 +75,24 @@ body.pg-loading {
   margin: 0;
   text-align: center;
 }
-/* line 83, ../src/please-wait.scss */
+/* line 78, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header, .pg-loading-screen .pg-loading-html {
   width: 100%;
   opacity: 0;
 }
-/* line 88, ../src/please-wait.scss */
+/* line 83, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header {
   text-align: center;
 }
-/* line 91, ../src/please-wait.scss */
+/* line 86, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-logo-header img {
   display: inline-block !important;
 }
-/* line 96, ../src/please-wait.scss */
+/* line 91, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-html {
   margin-top: 90px;
 }
-/* line 99, ../src/please-wait.scss */
+/* line 94, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-html.pg-removing {
   opacity: 0;
   -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
@@ -111,7 +101,7 @@ body.pg-loading {
   -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
   animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
-/* line 104, ../src/please-wait.scss */
+/* line 99, ../src/please-wait.scss */
 .pg-loading-screen .pg-loading-html.pg-loading {
   opacity: 1;
   -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
