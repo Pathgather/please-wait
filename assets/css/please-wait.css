@@ -93,22 +93,20 @@ body.pg-loading {
   margin-top: 90px;
 }
 /* line 94, ../src/please-wait.scss */
-.pg-loading-screen .pg-loading-html.pg-removing {
-  opacity: 0;
-  -webkit-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -moz-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -ms-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -o-animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  animation: pgAnimLoaded 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
+.pg-loading-screen .pg-loading-html.pg-loaded {
+  -webkit-transition: opacity 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  -moz-transition: opacity 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  -ms-transition: opacity 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  -o-transition: opacity 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+  transition: opacity 0.5s cubic-bezier(0.7, 0, 0.3, 1);
 }
-/* line 99, ../src/please-wait.scss */
-.pg-loading-screen .pg-loading-html.pg-loading {
+/* line 97, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-html.pg-loaded.pg-removing {
+  opacity: 0;
+}
+/* line 101, ../src/please-wait.scss */
+.pg-loading-screen .pg-loading-html.pg-loaded.pg-loading {
   opacity: 1;
-  -webkit-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -moz-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -ms-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  -o-animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
-  animation: pgAnimLoading 0.5s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 
 @-webkit-keyframes pgAnimLoading {

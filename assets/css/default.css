@@ -69,6 +69,11 @@ body.pg-loaded {
   font-weight: 300;
 }
 
+.pg-loading-screen .pg-loading-html form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 .pg-loading-screen .pg-loading-html p.loading-message {
   font-size: 20px;
   margin-bottom: 100px;
