@@ -39,7 +39,6 @@ angular.module('pleaseWaitApp', [])
 
     $scope.$watch('please_wait_spinner_index', function(val) {
       if(init) {
-        updateLoadingHtml();
         $scope.updatePleaseWait();
       } else {
         init = true;
