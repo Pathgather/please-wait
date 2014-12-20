@@ -33,7 +33,7 @@ body.pg-loading {
   opacity: 1;
 }
 /* line 42, ../src/please-wait.scss */
-.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html {
+.pg-loading-screen.pg-loading .pg-loading-logo-header, .pg-loading-screen.pg-loading .pg-loading-html:not(.pg-loaded) {
   -webkit-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -moz-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
   -ms-animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;

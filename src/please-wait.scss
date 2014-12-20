@@ -39,7 +39,7 @@ body.pg-loading {
       opacity: 1;
     }
 
-    .pg-loading-logo-header, .pg-loading-html {
+    .pg-loading-logo-header, .pg-loading-html:not(.pg-loaded) {
       @include prefixed(animation, pgAnimLoading 1s cubic-bezier(0.7,0,0.3,1) both);
     }
 

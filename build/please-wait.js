@@ -214,8 +214,8 @@
 
     PleaseWait.prototype._changeLoadingHtml = function() {
       this._readyToShowLoadingHtml = false;
-      this._loadingHtmlElem.removeEventListener(animationEvent, this._loadingHtmlListener);
-      this._loadingHtmlElem.removeEventListener(animationEvent, this._removingHtmlListener);
+      this._loadingHtmlElem.removeEventListener(transitionEvent, this._loadingHtmlListener);
+      this._loadingHtmlElem.removeEventListener(transitionEvent, this._removingHtmlListener);
       this._loadingHtmlElem.className = this._loadingHtmlElem.className.replace(" pg-loading ", "").replace(" pg-removing ", "");
       if (transitionSupport) {
         this._loadingHtmlElem.className += " pg-removing ";

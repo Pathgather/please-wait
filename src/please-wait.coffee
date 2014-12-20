@@ -188,8 +188,8 @@
     _changeLoadingHtml: ->
       @_readyToShowLoadingHtml = false
       # Remove any old event listeners that may still be attached to the DOM
-      @_loadingHtmlElem.removeEventListener(animationEvent, @_loadingHtmlListener)
-      @_loadingHtmlElem.removeEventListener(animationEvent, @_removingHtmlListener)
+      @_loadingHtmlElem.removeEventListener(transitionEvent, @_loadingHtmlListener)
+      @_loadingHtmlElem.removeEventListener(transitionEvent, @_removingHtmlListener)
       # Remove any old CSS transition classes that may still be on the element
       @_loadingHtmlElem.className = @_loadingHtmlElem.className.replace(" pg-loading ", "").replace( " pg-removing ", "")
 
