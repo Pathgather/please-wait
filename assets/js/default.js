@@ -2,6 +2,7 @@ angular.module('pleaseWaitApp', [])
   .controller('MainCtrl', ['$scope', '$window', '$timeout', function($scope, $window, $timeout) {
     var init = false;
     $scope.show_options = true;
+    $scope.loading_message = "";
     $scope.show_demo = true;
     $scope.please_wait_options = {
       backgroundColor: '#f46d3b',
@@ -28,10 +29,10 @@ angular.module('pleaseWaitApp', [])
       "If you spend your whole life waiting for the storm, you'll never enjoy the sunshine",
       "Don't wait for the perfect moment. Take the moment and make it perfect",
       "Don't wait for opportunity. Create it.",
-      "Glorious things are waiting for you. We're just getting them ready."
+      "Glorious things are waiting for you. We're just getting them ready.",
+      "Enjoy PleaseWait.js responsibly."
     ]
     $scope.please_wait_spinner_index = 2;
-    $scope.loading_message = $window.default_message;
     updateLoadingHtml = function() {
       $scope.please_wait_options.loadingHtml = "<p class='loading-message'>" + $scope.loading_message + "</p>" + $scope.please_wait_spinners[$scope.please_wait_spinner_index];
     };
