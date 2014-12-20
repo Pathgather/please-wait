@@ -86,7 +86,7 @@ angular.module('pleaseWaitApp', [])
         $window.loading_screen = $window.pleaseWait({
           logo: "assets/images/pathgather.png",
           backgroundColor: '#f46d3b',
-          loadingHtml: "<p class='loading-message'>" + $window.default_message + "</p><div class='sk-spinner sk-spinner-rotating-plane'></div>"
+          loadingHtml: "<p class='loading-message'></p><div class='sk-spinner sk-spinner-rotating-plane'></div>"
         });
       } else {
         $window.loading_screen.finish();
