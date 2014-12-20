@@ -41,7 +41,7 @@ body.pg-loading {
   animation: pgAnimLoading 1s cubic-bezier(0.7, 0, 0.3, 1) both;
 }
 /* line 46, ../src/please-wait.scss */
-.pg-loading-screen.pg-loading .pg-loading-html {
+.pg-loading-screen.pg-loading .pg-loading-html:not(.pg-loaded) {
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
   -ms-animation-delay: 0.3s;
