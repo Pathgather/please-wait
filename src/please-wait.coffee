@@ -68,6 +68,7 @@
     constructor: (options) ->
       defaultOptions = @constructor._defaultOptions
       @options = {}
+      @loaded = false
 
       # Set initial options, merging given options with the defaults
       for k, v of defaultOptions
@@ -103,6 +104,7 @@
 
       # Define a listener to look for any new loading HTML that needs to be displayed after the intiial transition finishes
       listener = =>
+        @loaded = true
         @_readyToShowLoadingHtml = true
         @_loadingHtmlElem.className += " pg-loaded"
         if animationSupport then @_loadingHtmlElem.removeEventListener(animationEvent, listener)
@@ -136,26 +138,23 @@
           else
             @_loadingHtmlListener()
 
-    finish: ->
+    finish: (immediately = false) ->
       return unless @_loadingElem?
-      # Again, define a listener to run once the loading screen has fully transitioned out
-      listener = =>
-        # Remove the loading screen from the body
-        document.body.removeChild(@_loadingElem)
-        # Add a class to the body to signal that the loading screen has finished and the app is ready
-        document.body.className = document.body.className.replace("pg-loading", "pg-loaded")
-        if animationSupport then @_loadingElem.removeEventListener(animationEvent, listener)
-        # Reset the loading screen element since it's no longer attached to the DOM
-        @_loadingElem = null
-
-      # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
-      if animationSupport
-        # Set a class on the loading screen to trigger a fadeout animation
-        @_loadingElem.className += " pg-loaded"
-        # When the loading screen is finished fading out, we'll remove it from the DOM
-        @_loadingElem.addEventListener(animationEvent, listener)
+      if @loaded || immediately
+        # Screen has fully initialized, so we are ready to close
+        @_finish()
       else
-        listener()
+        # Only here if screen is still animating in, so wait for the animation to complete before
+        # animating out
+        listener = =>
+          @_loadingElem.removeEventListener(animationEvent, listener)
+          # If we call finish immediately, the event listeners to animating in/out clash, so the screen removes
+          # immediately with no animation. Wait literally 1ms to avoid that
+          window.setTimeout () =>
+            @_finish()
+          , 1
+
+        @_loadingHtmlElem.addEventListener(animationEvent, listener)
 
     updateOption: (option, value) ->
       switch option
@@ -199,6 +198,26 @@
         @_loadingHtmlElem.addEventListener(transitionEvent, @_removingHtmlListener)
       else
         @_removingHtmlListener()
+
+    _finish: ->
+      # Again, define a listener to run once the loading screen has fully transitioned out
+      listener = =>
+        # Remove the loading screen from the body
+        document.body.removeChild(@_loadingElem)
+        # Add a class to the body to signal that the loading screen has finished and the app is ready
+        document.body.className = document.body.className.replace("pg-loading", "pg-loaded")
+        if animationSupport then @_loadingElem.removeEventListener(animationEvent, listener)
+        # Reset the loading screen element since it's no longer attached to the DOM
+        @_loadingElem = null
+
+      # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
+      if animationSupport
+        # Set a class on the loading screen to trigger a fadeout animation
+        @_loadingElem.className += " pg-loaded"
+        # When the loading screen is finished fading out, we'll remove it from the DOM
+        @_loadingElem.addEventListener(animationEvent, listener)
+      else
+        listener()
 
   pleaseWait = (options = {}) ->
     new PleaseWait(options)
