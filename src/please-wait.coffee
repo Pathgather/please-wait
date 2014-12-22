@@ -200,12 +200,18 @@
         @_removingHtmlListener()
 
     _finish: ->
+      # Add a class to the body to signal that the loading screen has finished and the app is ready.
+      # We do this here so that the user can display their HTML behind PleaseWait before it is
+      # fully transitioned out. Otherwise, the HTML flashes oddly, since there's a brief moment
+      # of time where there is no loading screen and no HTML
+      document.body.className += "pg-loaded"
+
       # Again, define a listener to run once the loading screen has fully transitioned out
       listener = =>
         # Remove the loading screen from the body
         document.body.removeChild(@_loadingElem)
-        # Add a class to the body to signal that the loading screen has finished and the app is ready
-        document.body.className = document.body.className.replace("pg-loading", "pg-loaded")
+        # Remove the pg-loading class since we're done here
+        document.body.className = document.body.className.replace("pg-loading", "")
         if animationSupport then @_loadingElem.removeEventListener(animationEvent, listener)
         # Reset the loading screen element since it's no longer attached to the DOM
         @_loadingElem = null

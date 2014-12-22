@@ -229,10 +229,11 @@
 
     PleaseWait.prototype._finish = function() {
       var listener;
+      document.body.className += "pg-loaded";
       listener = (function(_this) {
         return function() {
           document.body.removeChild(_this._loadingElem);
-          document.body.className = document.body.className.replace("pg-loading", "pg-loaded");
+          document.body.className = document.body.className.replace("pg-loading", "");
           if (animationSupport) {
             _this._loadingElem.removeEventListener(animationEvent, listener);
           }
