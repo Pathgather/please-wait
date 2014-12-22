@@ -13,11 +13,11 @@ body.pg-loading {
   z-index: 1000000;
   opacity: 1;
   background-color: #FFF;
-  -webkit-transition: background-color 0.6s ease-in-out 0s;
-  -moz-transition: background-color 0.6s ease-in-out 0s;
-  -ms-transition: background-color 0.6s ease-in-out 0s;
-  -o-transition: background-color 0.6s ease-in-out 0s;
-  transition: background-color 0.6s ease-in-out 0s;
+  -webkit-transition: background-color 0.4s ease-in-out 0s;
+  -moz-transition: background-color 0.4s ease-in-out 0s;
+  -ms-transition: background-color 0.4s ease-in-out 0s;
+  -o-transition: background-color 0.4s ease-in-out 0s;
+  transition: background-color 0.4s ease-in-out 0s;
 }
 /* line 32, ../src/please-wait.scss */
 .pg-loading-screen.pg-loaded {
