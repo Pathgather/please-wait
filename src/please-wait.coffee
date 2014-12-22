@@ -204,7 +204,7 @@
       # We do this here so that the user can display their HTML behind PleaseWait before it is
       # fully transitioned out. Otherwise, the HTML flashes oddly, since there's a brief moment
       # of time where there is no loading screen and no HTML
-      document.body.className += "pg-loaded"
+      document.body.className += " pg-loaded"
 
       # Again, define a listener to run once the loading screen has fully transitioned out
       listener = =>

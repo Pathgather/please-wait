@@ -229,7 +229,7 @@
 
     PleaseWait.prototype._finish = function() {
       var listener;
-      document.body.className += "pg-loaded";
+      document.body.className += " pg-loaded";
       listener = (function(_this) {
         return function() {
           document.body.removeChild(_this._loadingElem);
