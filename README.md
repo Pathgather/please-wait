@@ -7,7 +7,8 @@ Documentation and Demo
 Documentation and demo can be found [here](http://pathgather.github.io/please-wait/).
 
 Example: 
-!(screenrecording)[screenrecording.gif]
+
+![screenrecording](screenrecording.gif)
 
 About Pathgather
 ---------------------
