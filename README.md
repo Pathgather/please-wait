@@ -6,6 +6,9 @@ Documentation and Demo
 ---------------------
 Documentation and demo can be found [here](http://pathgather.github.io/please-wait/).
 
+Example: 
+!(screenrecording)[screenrecording.gif]
+
 About Pathgather
 ---------------------
 Pathgather is an NYC-based startup building a platform that dramatically accelerates learning for enterprises by bringing employees, training content, and existing enterprise systems into one engaging platform.
