@@ -69,6 +69,9 @@
       defaultOptions = @constructor._defaultOptions
       @options = {}
       @loaded = false
+      
+      # will be used as a flag incases finish function were called twice.
+      @_finished : false
 
       # Set initial options, merging given options with the defaults
       for k, v of defaultOptions
@@ -139,7 +142,9 @@
             @_loadingHtmlListener()
 
     finish: (immediately = false) ->
+      retrun if @_finished # returns if finish got called already - without this you are having an error.
       return unless @_loadingElem?
+      @_finished = true
       if @loaded || immediately
         # Screen has fully initialized, so we are ready to close
         @_finish()
