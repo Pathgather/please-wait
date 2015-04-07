@@ -69,6 +69,7 @@
       defaultOptions = @constructor._defaultOptions
       @options = {}
       @loaded = false
+      @finishing = false
 
       # Set initial options, merging given options with the defaults
       for k, v of defaultOptions
@@ -103,12 +104,19 @@
       @_loadingElem.className += " pg-loading"
 
       # Define a listener to look for any new loading HTML that needs to be displayed after the intiial transition finishes
-      listener = =>
+      listener = (evt) =>
         @loaded = true
         @_readyToShowLoadingHtml = true
         @_loadingHtmlElem.className += " pg-loaded"
         if animationSupport then @_loadingHtmlElem.removeEventListener(animationEvent, listener)
         if @_loadingHtmlToDisplay.length > 0 then @_changeLoadingHtml()
+        if @finishing
+          # If we reach here, it means @finish() was called while we were animating in, so we should
+          # call @_finish() immediately. This registers a new event listener, which will fire
+          # immediately, instead of waiting for the *next* animation to end. We stop propagation now
+          # to prevent this conflict
+          evt?.stopPropagation()
+          @_finish()
 
       if @_loadingHtmlElem?
         # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
@@ -139,22 +147,20 @@
             @_loadingHtmlListener()
 
     finish: (immediately = false) ->
-      return unless @_loadingElem?
+      # Our nice CSS animations won't run until the window is visible. This is a problem when the
+      # site is loading in a background tab, since the loading screen won't animate out until the
+      # window regains focus, which makes it look like the site takes forever to load! On browsers
+      # that support it (IE10+), use the visibility API to immediately hide the loading screen if
+      # the window is hidden
+      if window.document.hidden then immediately = true
+
+      # NOTE: if @loaded is false, the screen is still initializing. In that case, set @finishing to
+      # true and let the existing listener handle calling @_finish for us. Otherwise, we can call
+      # @_finish now to start the dismiss animation
+      @finishing = true
       if @loaded || immediately
         # Screen has fully initialized, so we are ready to close
-        @_finish()
-      else
-        # Only here if screen is still animating in, so wait for the animation to complete before
-        # animating out
-        listener = =>
-          @_loadingElem.removeEventListener(animationEvent, listener)
-          # If we call finish immediately, the event listeners to animating in/out clash, so the screen removes
-          # immediately with no animation. Wait literally 1ms to avoid that
-          window.setTimeout () =>
-            @_finish()
-          , 1
-
-        @_loadingHtmlElem.addEventListener(animationEvent, listener)
+        @_finish(immediately)
 
     updateOption: (option, value) ->
       switch option
@@ -199,7 +205,8 @@
       else
         @_removingHtmlListener()
 
-    _finish: ->
+    _finish: (immediately = false) ->
+      return unless @_loadingElem?
       # Add a class to the body to signal that the loading screen has finished and the app is ready.
       # We do this here so that the user can display their HTML behind PleaseWait before it is
       # fully transitioned out. Otherwise, the HTML flashes oddly, since there's a brief moment
@@ -217,7 +224,7 @@
         @_loadingElem = null
 
       # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
-      if animationSupport
+      if !immediately && animationSupport
         # Set a class on the loading screen to trigger a fadeout animation
         @_loadingElem.className += " pg-loaded"
         # When the loading screen is finished fading out, we'll remove it from the DOM
