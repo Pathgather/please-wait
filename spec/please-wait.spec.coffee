@@ -70,10 +70,19 @@ describe 'PleaseWait', ->
     it "removes the loading screen from the body after it transitions out", ->
       pleaseWait = window.pleaseWait({logo: 'logo.png', loadingHtml: "<div></div>"})
       addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+      loadingHtml = document.body.getElementsByClassName("pg-loading-html")[0]
       expect(addedScreen).toBeDefined()
+
+      # Animate in
+      event = document.createEvent('Event')
+      event.initEvent(getTransitionEvent(), true, true)
+      loadingHtml.dispatchEvent event
+
+      # Animate out
       pleaseWait.finish()
       event = document.createEvent('Event')
       event.initEvent(getTransitionEvent(), true, true)
       addedScreen.dispatchEvent event
+
       addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
       expect(addedScreen).not.toBeDefined()
