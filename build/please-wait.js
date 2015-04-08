@@ -1,9 +1,9 @@
 /**
-* Please Wait
+* PleaseWait
 * Display a nice loading screen while your app loads
 
 * @author Pathgather <tech@pathgather.com>
-* @copyright Pathgather 2014
+* @copyright Pathgather 2015
 * @license MIT <http://opensource.org/licenses/mit-license.php>
 * @link https://github.com/Pathgather/please-wait
 * @module pleaseWait
@@ -78,6 +78,7 @@
       defaultOptions = this.constructor._defaultOptions;
       this.options = {};
       this.loaded = false;
+      this.finishing = false;
       for (k in defaultOptions) {
         v = defaultOptions[k];
         this.options[k] = options[k] != null ? options[k] : v;
@@ -102,7 +103,7 @@
       document.body.appendChild(this._loadingElem);
       this._loadingElem.className += " pg-loading";
       listener = (function(_this) {
-        return function() {
+        return function(evt) {
           _this.loaded = true;
           _this._readyToShowLoadingHtml = true;
           _this._loadingHtmlElem.className += " pg-loaded";
@@ -110,7 +111,13 @@
             _this._loadingHtmlElem.removeEventListener(animationEvent, listener);
           }
           if (_this._loadingHtmlToDisplay.length > 0) {
-            return _this._changeLoadingHtml();
+            _this._changeLoadingHtml();
+          }
+          if (_this.finishing) {
+            if (evt != null) {
+              evt.stopPropagation();
+            }
+            return _this._finish();
           }
         };
       })(this);
@@ -148,25 +155,15 @@
     }
 
     PleaseWait.prototype.finish = function(immediately) {
-      var listener;
       if (immediately == null) {
         immediately = false;
       }
-      if (this._loadingElem == null) {
-        return;
+      if (window.document.hidden) {
+        immediately = true;
       }
+      this.finishing = true;
       if (this.loaded || immediately) {
-        return this._finish();
-      } else {
-        listener = (function(_this) {
-          return function() {
-            _this._loadingElem.removeEventListener(animationEvent, listener);
-            return window.setTimeout(function() {
-              return _this._finish();
-            }, 1);
-          };
-        })(this);
-        return this._loadingHtmlElem.addEventListener(animationEvent, listener);
+        return this._finish(immediately);
       }
     };
 
@@ -227,8 +224,14 @@
       }
     };
 
-    PleaseWait.prototype._finish = function() {
+    PleaseWait.prototype._finish = function(immediately) {
       var listener;
+      if (immediately == null) {
+        immediately = false;
+      }
+      if (this._loadingElem == null) {
+        return;
+      }
       document.body.className += " pg-loaded";
       listener = (function(_this) {
         return function() {
@@ -240,7 +243,7 @@
           return _this._loadingElem = null;
         };
       })(this);
-      if (animationSupport) {
+      if (!immediately && animationSupport) {
         this._loadingElem.className += " pg-loaded";
         return this._loadingElem.addEventListener(animationEvent, listener);
       } else {

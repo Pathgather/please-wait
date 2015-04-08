@@ -67,13 +67,48 @@ describe 'PleaseWait', ->
         expect(addedScreen.style.backgroundColor).toEqual("rgb(204, 204, 204)")
 
   describe 'finish', ->
-    it "removes the loading screen from the body after it transitions out", ->
+    pleaseWait = addedScreen = loadingHtml = null
+    beforeEach ->
       pleaseWait = window.pleaseWait({logo: 'logo.png', loadingHtml: "<div></div>"})
       addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+      loadingHtml = document.body.getElementsByClassName("pg-loading-html")[0]
       expect(addedScreen).toBeDefined()
-      pleaseWait.finish()
-      event = document.createEvent('Event')
-      event.initEvent(getTransitionEvent(), true, true)
-      addedScreen.dispatchEvent event
-      addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
-      expect(addedScreen).not.toBeDefined()
+
+    describe "when the loading screen has finished animating in", ->
+      beforeEach ->
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        loadingHtml.dispatchEvent event
+
+      it "removes the loading screen from the body after it transitions out", ->
+        pleaseWait.finish()
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        addedScreen.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).not.toBeDefined()
+
+    describe "when the loading screen has not yet finished animating in", ->
+      it "waits for the current animation to finish, then removes the loading screen from the body after it transitions out", ->
+        pleaseWait.finish()
+
+        # Make sure that animation events on the loading screen do not dismiss yet
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        addedScreen.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).toBeDefined()
+
+        # Finish loading in animation
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        loadingHtml.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).toBeDefined()
+
+        # Now, finish loading out animation and ensure the loading screen is dismissed
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        addedScreen.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).not.toBeDefined()
