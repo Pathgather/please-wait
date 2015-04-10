@@ -64,6 +64,7 @@
           </div>
         </div>
       """
+      onLoadedCallback: null
 
     constructor: (options) ->
       defaultOptions = @constructor._defaultOptions
@@ -102,6 +103,8 @@
       document.body.appendChild(@_loadingElem)
       # Add the CSS class that will trigger the initial transitions of the logo/loading HTML
       @_loadingElem.className += " pg-loading"
+      # Register a callback to invoke when the loading screen is finished
+      @_onLoadedCallback = @options.onLoadedCallback
 
       # Define a listener to look for any new loading HTML that needs to be displayed after the intiial transition finishes
       listener = (evt) =>
@@ -146,7 +149,7 @@
           else
             @_loadingHtmlListener()
 
-    finish: (immediately = false) ->
+    finish: (immediately = false, onLoadedCallback) ->
       # Our nice CSS animations won't run until the window is visible. This is a problem when the
       # site is loading in a background tab, since the loading screen won't animate out until the
       # window regains focus, which makes it look like the site takes forever to load! On browsers
@@ -158,6 +161,7 @@
       # true and let the existing listener handle calling @_finish for us. Otherwise, we can call
       # @_finish now to start the dismiss animation
       @finishing = true
+      if onLoadedCallback? then @updateOption('onLoadedCallback', onLoadedCallback)
       if @loaded || immediately
         # Screen has fully initialized, so we are ready to close
         @_finish(immediately)
@@ -170,6 +174,8 @@
           @_logoElem.src = value
         when 'loadingHtml'
           @updateLoadingHtml(value)
+        when 'onLoadedCallback'
+          @_onLoadedCallback = value
         else
           throw new Error("Unknown option '#{option}'")
 
@@ -212,6 +218,7 @@
       # fully transitioned out. Otherwise, the HTML flashes oddly, since there's a brief moment
       # of time where there is no loading screen and no HTML
       document.body.className += " pg-loaded"
+      if typeof @_onLoadedCallback == "function" then @_onLoadedCallback.apply(this)
 
       # Again, define a listener to run once the loading screen has fully transitioned out
       listener = =>
