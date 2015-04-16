@@ -70,7 +70,8 @@
       backgroundColor: null,
       logo: null,
       loadingHtml: null,
-      template: "<div class='pg-loading-inner'>\n  <div class='pg-loading-center-outer'>\n    <div class='pg-loading-center-middle'>\n      <h1 class='pg-loading-logo-header'>\n        <img class='pg-loading-logo'></img>\n      </h1>\n      <div class='pg-loading-html'>\n      </div>\n    </div>\n  </div>\n</div>"
+      template: "<div class='pg-loading-inner'>\n  <div class='pg-loading-center-outer'>\n    <div class='pg-loading-center-middle'>\n      <h1 class='pg-loading-logo-header'>\n        <img class='pg-loading-logo'></img>\n      </h1>\n      <div class='pg-loading-html'>\n      </div>\n    </div>\n  </div>\n</div>",
+      onLoadedCallback: null
     };
 
     function PleaseWait(options) {
@@ -102,6 +103,7 @@
       document.body.className += " pg-loading";
       document.body.appendChild(this._loadingElem);
       this._loadingElem.className += " pg-loading";
+      this._onLoadedCallback = this.options.onLoadedCallback;
       listener = (function(_this) {
         return function(evt) {
           _this.loaded = true;
@@ -154,7 +156,7 @@
       }
     }
 
-    PleaseWait.prototype.finish = function(immediately) {
+    PleaseWait.prototype.finish = function(immediately, onLoadedCallback) {
       if (immediately == null) {
         immediately = false;
       }
@@ -162,6 +164,9 @@
         immediately = true;
       }
       this.finishing = true;
+      if (onLoadedCallback != null) {
+        this.updateOption('onLoadedCallback', onLoadedCallback);
+      }
       if (this.loaded || immediately) {
         return this._finish(immediately);
       }
@@ -175,6 +180,8 @@
           return this._logoElem.src = value;
         case 'loadingHtml':
           return this.updateLoadingHtml(value);
+        case 'onLoadedCallback':
+          return this._onLoadedCallback = value;
         default:
           throw new Error("Unknown option '" + option + "'");
       }
@@ -233,6 +240,9 @@
         return;
       }
       document.body.className += " pg-loaded";
+      if (typeof this._onLoadedCallback === "function") {
+        this._onLoadedCallback.apply(this);
+      }
       listener = (function(_this) {
         return function() {
           document.body.removeChild(_this._loadingElem);
