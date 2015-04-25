@@ -66,6 +66,11 @@ describe 'PleaseWait', ->
         addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
         expect(addedScreen.style.backgroundColor).toEqual("rgb(204, 204, 204)")
 
+    it "removes any existing pg-loaded classes from the body", ->
+      document.body.className = "pg-loaded"
+      window.pleaseWait()
+      expect(document.body.className).toEqual("pg-loading")
+
   describe 'finish', ->
     loadingScreen = addedScreen = loadingHtml = onLoaded = null
     beforeEach ->
@@ -117,3 +122,15 @@ describe 'PleaseWait', ->
         addedScreen.dispatchEvent event
         addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
         expect(addedScreen).not.toBeDefined()
+
+  describe 'when reloading multiple times', ->
+    it "adds and removes pg-loaded & pg-loading from the body accordingly", ->
+      document.body.className = "my-class"
+      first = window.pleaseWait()
+      expect(document.body.className).toEqual("my-class pg-loading")
+      first.finish(true)
+      expect(document.body.className).toEqual("my-class pg-loaded")
+      second = window.pleaseWait()
+      expect(document.body.className).toEqual("my-class pg-loading")
+      second.finish(true)
+      expect(document.body.className).toEqual("my-class pg-loaded")
