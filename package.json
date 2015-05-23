@@ -8,7 +8,7 @@
     "name": "Pathgather",
     "email": "tech@pathgather.com"
   },
-  "version": "0.0.1",
+  "version": "0.0.3",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.10.0",

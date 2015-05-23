@@ -3,11 +3,11 @@
 * Display a nice loading screen while your app loads
 
 * @author Pathgather <tech@pathgather.com>
-* @copyright Pathgather 2014
+* @copyright Pathgather 2015
 * @license MIT <http://opensource.org/licenses/mit-license.php>
 * @link https://github.com/Pathgather/please-wait
 * @module pleaseWait
-* @version 0.0.1
+* @version 0.0.3
 */
 (function(root, factory) {
   if (typeof exports === "object") {
