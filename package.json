@@ -1,5 +1,5 @@
 {
-  "name": "Please Wait",
+  "name": "PleaseWait",
   "module": "pleaseWait",
   "author": "Pathgather",
   "description": "Display a nice loading screen while your app loads",

@@ -66,14 +66,71 @@ describe 'PleaseWait', ->
         addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
         expect(addedScreen.style.backgroundColor).toEqual("rgb(204, 204, 204)")
 
+    it "removes any existing pg-loaded classes from the body", ->
+      document.body.className = "pg-loaded"
+      window.pleaseWait()
+      expect(document.body.className).toEqual("pg-loading")
+
   describe 'finish', ->
-    it "removes the loading screen from the body after it transitions out", ->
-      pleaseWait = window.pleaseWait({logo: 'logo.png', loadingHtml: "<div></div>"})
+    loadingScreen = addedScreen = loadingHtml = onLoaded = null
+    beforeEach ->
+      onLoaded = jasmine.createSpy('onLoaded')
+      loadingScreen = window.pleaseWait({logo: 'logo.png', loadingHtml: "<div></div>", onLoadedCallback: onLoaded})
       addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+      loadingHtml = document.body.getElementsByClassName("pg-loading-html")[0]
       expect(addedScreen).toBeDefined()
-      pleaseWait.finish()
-      event = document.createEvent('Event')
-      event.initEvent(getTransitionEvent(), true, true)
-      addedScreen.dispatchEvent event
-      addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
-      expect(addedScreen).not.toBeDefined()
+
+    describe "when the loading screen has finished animating in", ->
+      beforeEach ->
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        loadingHtml.dispatchEvent event
+        expect(onLoaded).not.toHaveBeenCalled()
+
+      it "removes the loading screen from the body after it transitions out", ->
+        loadingScreen.finish()
+        expect(onLoaded).toHaveBeenCalled()
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        addedScreen.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).not.toBeDefined()
+
+    describe "when the loading screen has not yet finished animating in", ->
+      it "waits for the current animation to finish, then removes the loading screen from the body after it transitions out", ->
+        loadingScreen.finish()
+
+        # Make sure that animation events on the loading screen do not dismiss yet
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        addedScreen.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).toBeDefined()
+
+        # Finish loading in animation
+        expect(onLoaded).not.toHaveBeenCalled()
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        loadingHtml.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).toBeDefined()
+        expect(onLoaded).toHaveBeenCalled()
+
+        # Now, finish loading out animation and ensure the loading screen is dismissed
+        event = document.createEvent('Event')
+        event.initEvent(getTransitionEvent(), true, true)
+        addedScreen.dispatchEvent event
+        addedScreen = document.body.getElementsByClassName("pg-loading-screen")[0]
+        expect(addedScreen).not.toBeDefined()
+
+  describe 'when reloading multiple times', ->
+    it "adds and removes pg-loaded & pg-loading from the body accordingly", ->
+      document.body.className = "my-class"
+      first = window.pleaseWait()
+      expect(document.body.className).toEqual("my-class pg-loading")
+      first.finish(true)
+      expect(document.body.className).toEqual("my-class pg-loaded")
+      second = window.pleaseWait()
+      expect(document.body.className).toEqual("my-class pg-loading")
+      second.finish(true)
+      expect(document.body.className).toEqual("my-class pg-loaded")

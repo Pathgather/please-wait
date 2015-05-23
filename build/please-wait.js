@@ -1,5 +1,5 @@
 /**
-* Please Wait
+* PleaseWait
 * Display a nice loading screen while your app loads
 
 * @author Pathgather <tech@pathgather.com>
@@ -70,7 +70,8 @@
       backgroundColor: null,
       logo: null,
       loadingHtml: null,
-      template: "<div class='pg-loading-inner'>\n  <div class='pg-loading-center-outer'>\n    <div class='pg-loading-center-middle'>\n      <h1 class='pg-loading-logo-header'>\n        <img class='pg-loading-logo'></img>\n      </h1>\n      <div class='pg-loading-html'>\n      </div>\n    </div>\n  </div>\n</div>"
+      template: "<div class='pg-loading-inner'>\n  <div class='pg-loading-center-outer'>\n    <div class='pg-loading-center-middle'>\n      <h1 class='pg-loading-logo-header'>\n        <img class='pg-loading-logo'></img>\n      </h1>\n      <div class='pg-loading-html'>\n      </div>\n    </div>\n  </div>\n</div>",
+      onLoadedCallback: null
     };
 
     function PleaseWait(options) {
@@ -78,6 +79,7 @@
       defaultOptions = this.constructor._defaultOptions;
       this.options = {};
       this.loaded = false;
+      this.finishing = false;
       for (k in defaultOptions) {
         v = defaultOptions[k];
         this.options[k] = options[k] != null ? options[k] : v;
@@ -101,8 +103,9 @@
       document.body.className += " pg-loading";
       document.body.appendChild(this._loadingElem);
       this._loadingElem.className += " pg-loading";
+      this._onLoadedCallback = this.options.onLoadedCallback;
       listener = (function(_this) {
-        return function() {
+        return function(evt) {
           _this.loaded = true;
           _this._readyToShowLoadingHtml = true;
           _this._loadingHtmlElem.className += " pg-loaded";
@@ -110,7 +113,13 @@
             _this._loadingHtmlElem.removeEventListener(animationEvent, listener);
           }
           if (_this._loadingHtmlToDisplay.length > 0) {
-            return _this._changeLoadingHtml();
+            _this._changeLoadingHtml();
+          }
+          if (_this.finishing) {
+            if (evt != null) {
+              evt.stopPropagation();
+            }
+            return _this._finish();
           }
         };
       })(this);
@@ -147,26 +156,19 @@
       }
     }
 
-    PleaseWait.prototype.finish = function(immediately) {
-      var listener;
+    PleaseWait.prototype.finish = function(immediately, onLoadedCallback) {
       if (immediately == null) {
         immediately = false;
       }
-      if (this._loadingElem == null) {
-        return;
+      if (window.document.hidden) {
+        immediately = true;
+      }
+      this.finishing = true;
+      if (onLoadedCallback != null) {
+        this.updateOption('onLoadedCallback', onLoadedCallback);
       }
       if (this.loaded || immediately) {
-        return this._finish();
-      } else {
-        listener = (function(_this) {
-          return function() {
-            _this._loadingElem.removeEventListener(animationEvent, listener);
-            return window.setTimeout(function() {
-              return _this._finish();
-            }, 1);
-          };
-        })(this);
-        return this._loadingHtmlElem.addEventListener(animationEvent, listener);
+        return this._finish(immediately);
       }
     };
 
@@ -178,6 +180,8 @@
           return this._logoElem.src = value;
         case 'loadingHtml':
           return this.updateLoadingHtml(value);
+        case 'onLoadedCallback':
+          return this._onLoadedCallback = value;
         default:
           throw new Error("Unknown option '" + option + "'");
       }
@@ -227,9 +231,18 @@
       }
     };
 
-    PleaseWait.prototype._finish = function() {
+    PleaseWait.prototype._finish = function(immediately) {
       var listener;
+      if (immediately == null) {
+        immediately = false;
+      }
+      if (this._loadingElem == null) {
+        return;
+      }
       document.body.className += " pg-loaded";
+      if (typeof this._onLoadedCallback === "function") {
+        this._onLoadedCallback.apply(this);
+      }
       listener = (function(_this) {
         return function() {
           document.body.removeChild(_this._loadingElem);
@@ -240,7 +253,7 @@
           return _this._loadingElem = null;
         };
       })(this);
-      if (animationSupport) {
+      if (!immediately && animationSupport) {
         this._loadingElem.className += " pg-loaded";
         return this._loadingElem.addEventListener(animationEvent, listener);
       } else {
