@@ -13,7 +13,7 @@
     "url": "git://github.com/Pathgather/please-wait.git"
   },
   "main": "build/please-wait.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.10.0",

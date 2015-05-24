@@ -7,7 +7,7 @@
 * @license MIT <http://opensource.org/licenses/mit-license.php>
 * @link https://github.com/Pathgather/please-wait
 * @module please-wait
-* @version 0.0.4
+* @version 0.0.5
 */
 (function(root, factory) {
   if (typeof exports === "object") {
