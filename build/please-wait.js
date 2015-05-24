@@ -271,7 +271,7 @@
         };
       })(this);
       if (!immediately && animationSupport) {
-        addClass("pg-loaded", document.body);
+        addClass("pg-loaded", this._loadingElem);
         return this._loadingElem.addEventListener(animationEvent, listener);
       } else {
         return listener();

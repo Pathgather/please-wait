@@ -249,7 +249,7 @@
       # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
       if !immediately && animationSupport
         # Set a class on the loading screen to trigger a fadeout animation
-        addClass("pg-loaded", document.body)
+        addClass("pg-loaded", @_loadingElem)
         # When the loading screen is finished fading out, we'll remove it from the DOM
         @_loadingElem.addEventListener(animationEvent, listener)
       else
