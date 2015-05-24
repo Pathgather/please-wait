@@ -8,6 +8,10 @@
     "name": "Pathgather",
     "email": "tech@pathgather.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Pathgather/please-wait.git"
+  },
   "version": "0.0.3",
   "devDependencies": {
     "grunt": "~0.4.5",
