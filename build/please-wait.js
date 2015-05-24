@@ -1,13 +1,13 @@
 /**
-* PleaseWait
+* please-wait
 * Display a nice loading screen while your app loads
 
 * @author Pathgather <tech@pathgather.com>
 * @copyright Pathgather 2015
 * @license MIT <http://opensource.org/licenses/mit-license.php>
 * @link https://github.com/Pathgather/please-wait
-* @module pleaseWait
-* @version 0.0.3
+* @module please-wait
+* @version 0.0.4
 */
 (function(root, factory) {
   if (typeof exports === "object") {
@@ -18,7 +18,7 @@
     factory(root);
   }
 })(this, function(exports) {
-  var PleaseWait, animationEvent, animationSupport, domPrefixes, elm, key, pfx, pleaseWait, transEndEventNames, transitionEvent, transitionSupport, val, _i, _len;
+  var PleaseWait, addClass, animationEvent, animationSupport, domPrefixes, elm, key, pfx, pleaseWait, removeClass, transEndEventNames, transitionEvent, transitionSupport, val, _i, _len;
   elm = document.createElement('fakeelement');
   animationSupport = false;
   transitionSupport = false;
@@ -65,6 +65,20 @@
       }
     }
   }
+  addClass = function(classname, elem) {
+    if (elem.classList) {
+      return elem.classList.add(classname);
+    } else {
+      return elem.className += " " + classname;
+    }
+  };
+  removeClass = function(classname, elem) {
+    if (elem.classList) {
+      return elem.classList.remove(classname);
+    } else {
+      return elem.className = elem.className.replace(classname, "").trim();
+    }
+  };
   PleaseWait = (function() {
     PleaseWait._defaultOptions = {
       backgroundColor: null,
@@ -100,15 +114,16 @@
       if (this._logoElem != null) {
         this._logoElem.src = this.options.logo;
       }
-      document.body.className += " pg-loading";
+      removeClass("pg-loaded", document.body);
+      addClass("pg-loading", document.body);
       document.body.appendChild(this._loadingElem);
-      this._loadingElem.className += " pg-loading";
+      addClass("pg-loading", this._loadingElem);
       this._onLoadedCallback = this.options.onLoadedCallback;
       listener = (function(_this) {
         return function(evt) {
           _this.loaded = true;
           _this._readyToShowLoadingHtml = true;
-          _this._loadingHtmlElem.className += " pg-loaded";
+          addClass("pg-loaded", _this._loadingHtmlElem);
           if (animationSupport) {
             _this._loadingHtmlElem.removeEventListener(animationEvent, listener);
           }
@@ -132,7 +147,7 @@
         this._loadingHtmlListener = (function(_this) {
           return function() {
             _this._readyToShowLoadingHtml = true;
-            _this._loadingHtmlElem.className = _this._loadingHtmlElem.className.replace(" pg-loading ", "");
+            removeClass("pg-loading", _this._loadingHtmlElem);
             if (transitionSupport) {
               _this._loadingHtmlElem.removeEventListener(transitionEvent, _this._loadingHtmlListener);
             }
@@ -144,7 +159,8 @@
         this._removingHtmlListener = (function(_this) {
           return function() {
             _this._loadingHtmlElem.innerHTML = _this._loadingHtmlToDisplay.shift();
-            _this._loadingHtmlElem.className = _this._loadingHtmlElem.className.replace(" pg-removing ", " pg-loading ");
+            removeClass("pg-removing", _this._loadingHtmlElem);
+            addClass("pg-loading", _this._loadingHtmlElem);
             if (transitionSupport) {
               _this._loadingHtmlElem.removeEventListener(transitionEvent, _this._removingHtmlListener);
               return _this._loadingHtmlElem.addEventListener(transitionEvent, _this._loadingHtmlListener);
@@ -222,9 +238,10 @@
       this._readyToShowLoadingHtml = false;
       this._loadingHtmlElem.removeEventListener(transitionEvent, this._loadingHtmlListener);
       this._loadingHtmlElem.removeEventListener(transitionEvent, this._removingHtmlListener);
-      this._loadingHtmlElem.className = this._loadingHtmlElem.className.replace(" pg-loading ", "").replace(" pg-removing ", "");
+      removeClass("pg-loading", this._loadingHtmlElem);
+      removeClass("pg-removing", this._loadingHtmlElem);
       if (transitionSupport) {
-        this._loadingHtmlElem.className += " pg-removing ";
+        addClass("pg-removing", this._loadingHtmlElem);
         return this._loadingHtmlElem.addEventListener(transitionEvent, this._removingHtmlListener);
       } else {
         return this._removingHtmlListener();
@@ -239,14 +256,14 @@
       if (this._loadingElem == null) {
         return;
       }
-      document.body.className += " pg-loaded";
+      addClass("pg-loaded", document.body);
       if (typeof this._onLoadedCallback === "function") {
         this._onLoadedCallback.apply(this);
       }
       listener = (function(_this) {
         return function() {
           document.body.removeChild(_this._loadingElem);
-          document.body.className = document.body.className.replace("pg-loading", "");
+          removeClass("pg-loading", document.body);
           if (animationSupport) {
             _this._loadingElem.removeEventListener(animationEvent, listener);
           }
@@ -254,7 +271,7 @@
         };
       })(this);
       if (!immediately && animationSupport) {
-        this._loadingElem.className += " pg-loaded";
+        addClass("pg-loaded", document.body);
         return this._loadingElem.addEventListener(animationEvent, listener);
       } else {
         return listener();
