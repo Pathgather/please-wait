@@ -15,7 +15,7 @@ body.pg-loaded .inner {
   display: block;
 }
 
-body.pg-loaded {
+body.pg-loaded .inner {
   opacity: 1;
   -webkit-animation: pgAnimLoading 0.3s cubic-bezier(0.7, 0, 0.3, 1) both;
   -moz-animation: pgAnimLoading 0.3s cubic-bezier(0.7, 0, 0.3, 1) both;
