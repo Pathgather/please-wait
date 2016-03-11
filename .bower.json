@@ -1,0 +1,29 @@
+{
+  "name": "please-wait-1",
+  "version": "0.0.6",
+  "homepage": "https://github.com/Pathgather/please-wait",
+  "authors": [
+    "Pathgather <tech@pathgather.com>",
+	"Meldinoor <meldinoor@gmail.com"
+  ],
+  "description": "A nice loading screen for your SPA while users wait for complete initialization",
+  "main": ["build/please-wait.css", "build/please-wait.js"],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "loading",
+    "single page app",
+    "SPA",
+    "loading screen",
+    "spinner"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
