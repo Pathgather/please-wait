@@ -78,7 +78,8 @@
         </div>
       """
       onLoadedCallback: null
-
+      onFinishedCallback: null
+	  
     constructor: (options) ->
       defaultOptions = @constructor._defaultOptions
       @options = {}
@@ -119,6 +120,7 @@
       addClass("pg-loading", @_loadingElem)
       # Register a callback to invoke when the loading screen is finished
       @_onLoadedCallback = @options.onLoadedCallback
+      @_onFinishedCallback = @options.onFinishedCallback
 
       # Define a listener to look for any new loading HTML that needs to be displayed after the intiial transition finishes
       listener = (evt) =>
@@ -245,6 +247,7 @@
         if animationSupport then @_loadingElem.removeEventListener(animationEvent, listener)
         # Reset the loading screen element since it's no longer attached to the DOM
         @_loadingElem = null
+        @_onFinishedCallback.apply(this)
 
       # Detect CSS animation support. If not found, we'll call the listener immediately. Otherwise, we'll wait
       if !immediately && animationSupport

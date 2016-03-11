@@ -3,7 +3,8 @@
   "version": "0.0.5",
   "homepage": "https://github.com/Pathgather/please-wait",
   "authors": [
-    "Pathgather <tech@pathgather.com>"
+    "Pathgather <tech@pathgather.com>",
+	"Meldinoor <meldinoor@gmail.com"
   ],
   "description": "A nice loading screen for your SPA while users wait for complete initialization",
   "main": ["build/please-wait.css", "build/please-wait.js"],
