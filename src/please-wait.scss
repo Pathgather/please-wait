@@ -85,6 +85,8 @@ body.pg-loading {
 
     img {
       display: inline-block !important;
+      max-width: 100%;
+      height: auto;
     }
   }
 
